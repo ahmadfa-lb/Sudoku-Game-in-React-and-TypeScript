@@ -1,0 +1,60 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+div {
+  display: flex;
+  flex-direction: column;
+  /* width: 70%; */
+  /* margin: auto; */
+  justify-content: center;
+  align-items: center;
+  background: #ffeac5;
+  
+}
+
+/* SudokuGrid.css */
+
+.sudoku-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0px;
+  border: 1px solid #333;
+  width: fit-content;
+}
+
+.sudoku-cell {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 2px solid #ddd;
+}
+
+/* Add thicker borders to separate 3x3 sections */
+.sudoku-cell.border-top {
+  border-top: 2px solid #333;
+}
+.sudoku-cell.border-left {
+  border-left: 2px solid #333;
+}
+.sudoku-cell.border-right {
+  border-right: 2px solid #333;
+}
+.sudoku-cell.border-bottom {
+  border-bottom: 2px solid #333;
+}
+
+.number-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.number-button {
+  width: 40px;
+  height: 40px;
+}
