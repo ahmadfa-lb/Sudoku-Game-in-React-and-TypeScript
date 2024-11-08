@@ -13,7 +13,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-library.add(fas, fab); // Add solid and brand icons to the library
+library.add(fas, fab);
 
 
 const App: React.FC = () => {
@@ -22,7 +22,8 @@ const App: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
 
   const handleNumberClick = (number: string) => {
-    setSelectedNumber(number);
+    if (focusedCell)
+      setSelectedNumber(number);
   };
 
   return (
