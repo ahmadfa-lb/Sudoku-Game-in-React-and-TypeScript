@@ -27,6 +27,10 @@
   background-color: #e0f7fa; 
 }
 
+.sudoku-cell.conflict {
+  background-color: #ffcccc; /* Light red for conflict */
+}
+
 .sudoku-cell.focused {
   background-color: #81d4fa; 
 }
