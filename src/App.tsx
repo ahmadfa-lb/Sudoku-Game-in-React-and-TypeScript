@@ -1,18 +1,33 @@
-import { useState } from 'react'
-import './App.css'
+// App.tsx
+import React, { useState } from 'react';
 import SudokuGrid from './components/SudokuGrid';
-import numbersBtns from './components/NumbersBtns'
+import NumberButtons from './components/NumbersBtns';
+import './App.css';
 
+const App: React.FC = () => {
+  const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill('')));
+  const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
+  const [selectedNumber, setSelectedNumber] = useState<string>('');
 
-function App() {
+  const handleNumberClick = (number: string) => {
+    setSelectedNumber(number);
+  };
 
   return (
-    <div className='container'>
-    <h1>Sudoku Game</h1>
-    <SudokuGrid />
-    {/* <NumbersBtns /> */}
-  </div>
-  )
-}
+    <div className='game-container'>
+      <h1>Soduko Game</h1>
+      <div className='mistakes'>Mistakes: <span>0/6</span></div>
+      <SudokuGrid 
+        focusedCell={focusedCell} 
+        setFocusedCell={setFocusedCell} 
+        selectedNumber={selectedNumber}
+        grid={grid}
+        setGrid={setGrid}
+      />
+      <NumberButtons onNumberClick={handleNumberClick} />
+    </div>
+  );
+};
 
-export default App
+export default App;
+

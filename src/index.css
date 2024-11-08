@@ -4,18 +4,6 @@
   box-sizing: border-box;
 }
 
-
-div {
-  display: flex;
-  flex-direction: column;
-  /* width: 70%; */
-  /* margin: auto; */
-  justify-content: center;
-  align-items: center;
-  background: #ffeac5;
-  
-}
-
 /* SudokuGrid.css */
 
 .sudoku-container {
@@ -24,6 +12,7 @@ div {
   gap: 0px;
   border: 1px solid #333;
   width: fit-content;
+  
 }
 
 .sudoku-cell {
@@ -31,11 +20,21 @@ div {
   height: 40px;
   text-align: center;
   border: 2px solid #ddd;
+  /* background-color: #F0EDCF; */
+}
+
+.sudoku-cell.highlighted {
+  background-color: #e0f7fa; 
+}
+
+.sudoku-cell.focused {
+  background-color: #81d4fa; 
 }
 
 /* Add thicker borders to separate 3x3 sections */
 .sudoku-cell.border-top {
   border-top: 2px solid #333;
+  
 }
 .sudoku-cell.border-left {
   border-left: 2px solid #333;
@@ -51,10 +50,25 @@ div {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 5px;
 }
 
 .number-button {
   width: 40px;
-  height: 40px;
+  height: 50px;
+  box-shadow: 5px 5px rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #325aaf;
+  background-color: #ebeff5;
+  font-size: 2.5rem;
 }
+
+.number-button:hover{
+  background-color: #81d4fa;
+}
+
+
+
+

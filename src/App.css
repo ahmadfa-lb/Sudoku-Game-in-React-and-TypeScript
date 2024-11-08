@@ -4,12 +4,12 @@ body{
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
-    /* justify-content: center; */
-    min-height: 100vh;
+    justify-content: center;
+    /* min-height: 100vh; */
     background: #603f26;
   }
 
-.container{
+.game-container{
     width: 850px;
     background: #ffeac5;
     display: flex;
@@ -17,5 +17,19 @@ body{
     align-items: center;
     gap: 70px;
     padding: 60px 40px;
-    /* border-radius: 10px; */
+    box-shadow: rgba(0,0,0,0.1);
+    height: 100vh;
+    z-index: 1000;
+}
+
+.mistakes{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  position: absolute;
+  margin-top: 5.5rem;
+  margin-left: -16rem;
+}
+
+.mistakes span{
+  color: #ff0000;
 }
