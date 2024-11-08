@@ -68,7 +68,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   setFocusedCell,
   selectedNumber,
   grid,
-  setGrid
+  setGrid,
+  setSelectedNumber,
 }) => {
   
   useEffect(() => {
@@ -78,11 +79,13 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         r.map((cell, j) => (i === row && j === col ? selectedNumber : cell))
       );
       setGrid(newGrid);
+      setSelectedNumber('');
     }
   }, [selectedNumber, focusedCell, grid, setGrid]);
 
   const handleCellClick = (row: number, col: number) => {
     setFocusedCell({ row, col });
+
   };
 
   const isHighlighted = (row: number, col: number) => {

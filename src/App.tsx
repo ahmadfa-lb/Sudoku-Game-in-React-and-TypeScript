@@ -33,6 +33,7 @@ const App: React.FC = () => {
         focusedCell={focusedCell} 
         setFocusedCell={setFocusedCell} 
         selectedNumber={selectedNumber}
+        setSelectedNumber={setSelectedNumber}
         grid={grid}
         setGrid={setGrid}
       />
