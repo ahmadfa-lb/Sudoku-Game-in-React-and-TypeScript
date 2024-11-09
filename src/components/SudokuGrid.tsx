@@ -11,6 +11,7 @@ interface SudokuGridProps {
   setMistakes: React.Dispatch<React.SetStateAction<number>>;
   maxMistakes: number;
   setSelectedNumber: React.Dispatch<React.SetStateAction<string>>;
+  setGameOver: React.Dispatch<React.SetStateAction<boolean>>; // Added game over state
 }
 
 const SudokuGrid: React.FC<SudokuGridProps> = ({
@@ -22,6 +23,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   setSelectedNumber,
   setMistakes,
   maxMistakes,
+  setGameOver, // Game over handler prop
 }) => {
   const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
   const [mistakenNumber, setMistakenNumber] = useState<string | null>(null); // Track mistaken number
@@ -38,13 +40,13 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
       // Check if the updated grid is valid
       if (isValidSudoku(newGrid)) {
         setGrid(newGrid);
-        setConflictCells([]);
-        setSelectedNumber('');
-        setMistakenNumber(null);
+        setConflictCells([]); // Reset conflicts
+        setSelectedNumber(''); // Clear selected number
+        setMistakenNumber(null); // Clear mistaken number
       } else {
         setGrid(newGrid);
-        setSelectedNumber('');
-        setMistakenNumber(selectedNumber);
+        setSelectedNumber(''); // Reset selected number
+        setMistakenNumber(selectedNumber); // Set mistaken number
 
         // Identify conflicting cells and all cells with the mistaken number
         const newConflictCells = [];
@@ -70,16 +72,20 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         }
 
         setConflictCells(newConflictCells); // Set cells with conflicts
-        setMistakes(prev => {
+
+        // Increase mistakes count
+        setMistakes((prev) => {
           const newMistakeCount = prev + 1;
+
           if (newMistakeCount >= maxMistakes) {
-            alert("Game over! You've reached the maximum mistakes.");
+            setGameOver(true); // Game over if max mistakes are reached
           }
+
           return newMistakeCount;
         });
       }
     }
-  }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes]);
+  }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes, setGameOver]);
 
   const handleCellClick = (row: number, col: number) => {
     setFocusedCell({ row, col });
@@ -122,5 +128,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
 };
 
 export default SudokuGrid;
+
+
+
 
 

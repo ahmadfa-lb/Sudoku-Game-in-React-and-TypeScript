@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import SudokuGrid from './components/SudokuGrid';
 import NumberButtons from './components/NumbersBtns';
+import BoxResult from './components/BoxResult';
 import './App.css';
 
 // src/App.tsx or src/fontAwesome.ts
@@ -13,6 +14,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
+
 library.add(fas, fab);
 
 
@@ -22,6 +24,7 @@ const App: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [mistakes, setMistakes] = useState(0);
   const maxMistakes = 3;
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
 
   const handleNumberClick = (number: string) => {
@@ -29,7 +32,20 @@ const App: React.FC = () => {
       setSelectedNumber(number);
   };
 
+
+    // Reset game function
+    const resetGame = () => {
+      // Resetting the states to initial values
+      setGrid(Array.from({ length: 9 }, () => Array(9).fill('')));
+      setFocusedCell(null);
+      setSelectedNumber('');
+      setMistakes(0);
+      setIsGameOver(false);
+    };
+
   return (
+    <>
+    {isGameOver && <BoxResult resetGame={resetGame} />}
     <div className='game-container'>
       <h1>Soduko Game</h1>
       <div className="mistakes">Mistakes: <span>{mistakes}/{maxMistakes}</span></div>
@@ -43,10 +59,12 @@ const App: React.FC = () => {
         mistakes={mistakes}
         setMistakes={setMistakes}
         maxMistakes={maxMistakes}
+        setGameOver={setIsGameOver}
       />
       <button className='undo-btn'><FontAwesomeIcon icon="fa-solid fa-arrow-rotate-left" /></button>
       <NumberButtons onNumberClick={handleNumberClick} />
     </div>
+    </>
   );
 };
 
