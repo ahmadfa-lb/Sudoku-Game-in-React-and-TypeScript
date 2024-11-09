@@ -116,10 +116,24 @@
 
 .game-modal img {
   max-width: 100%;
-  /* margin-bottom: 20px; */
+  margin-bottom: 20px;
 }
 
 .game-modal button {
   padding: 12px 23px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #F9F7F7;
+  background-color: #112D4E;
+  font-size: 1.4rem;
+}
+
+.game-modal button:hover{
+  color: #F9F7F7;
+  background-color: #3F72AF;
+  transition: all 0.1s ease;
+  /* transform: scale(1.05); */
+  transform: scale3d(1.1, 1.1, 1);
 }
 
