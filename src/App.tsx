@@ -20,6 +20,9 @@ const App: React.FC = () => {
   const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill('')));
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
+  const [mistakes, setMistakes] = useState(0);
+  const maxMistakes = 3;
+
 
   const handleNumberClick = (number: string) => {
     if (focusedCell)
@@ -29,7 +32,7 @@ const App: React.FC = () => {
   return (
     <div className='game-container'>
       <h1>Soduko Game</h1>
-      <div className='mistakes'>Mistakes: <span>0/3</span></div>
+      <div className="mistakes">Mistakes: <span>{mistakes}/{maxMistakes}</span></div>
       <SudokuGrid 
         focusedCell={focusedCell} 
         setFocusedCell={setFocusedCell} 
@@ -37,6 +40,9 @@ const App: React.FC = () => {
         setSelectedNumber={setSelectedNumber}
         grid={grid}
         setGrid={setGrid}
+        mistakes={mistakes}
+        setMistakes={setMistakes}
+        maxMistakes={maxMistakes}
       />
       <button className='undo-btn'><FontAwesomeIcon icon="fa-solid fa-arrow-rotate-left" /></button>
       <NumberButtons onNumberClick={handleNumberClick} />

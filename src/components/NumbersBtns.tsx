@@ -1,4 +1,3 @@
-// NumberButtons.tsx
 import React from 'react';
 import '../index.css'; // Specific styles for the buttons
 
