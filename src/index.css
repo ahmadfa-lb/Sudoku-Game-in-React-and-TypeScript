@@ -19,24 +19,27 @@
   width: 40px;
   height: 40px;
   text-align: center;
-  border: 2px solid #ddd;
-  /* background-color: #F0EDCF; */
+  border: .1px solid #ddd;
+  outline: 1px solid #333;
+  background-color: #F9F7F7;
+  font-size: 1.5rem;
+  cursor:pointer;
 }
 
 .sudoku-cell.highlighted {
-  background-color: #e0f7fa; 
+  background-color: #DBE2EF; 
 }
 
 .sudoku-cell.mistake-number {
-  background-color: #81d4fa;
+  background-color: #3F72AF;
 }
 
 .sudoku-cell.conflict {
-  background-color: #ffcccc;
+  background-color: #f58282;
 }
 
 .sudoku-cell.focused {
-  background-color: #81d4fa; 
+  background-color: #3F72AF; 
 }
 
 
@@ -59,13 +62,13 @@
   margin-top: 20px;
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  gap: 8px;
 }
 
 .number-button {
   width: 40px;
   height: 50px;
-  box-shadow: 5px 5px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px rgba(0,0,0,0.1);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -75,7 +78,8 @@
 }
 
 .number-button:hover{
-  background-color: #81d4fa;
+  color: #F9F7F7;
+  background-color: #3F72AF;
 }
 
 /* ////////////////////////////////// */
@@ -89,7 +93,7 @@
   display: flex;
   opacity: 0;
   pointer-events: none;
-  z-index: 100;
+  z-index: 1000000;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.6);

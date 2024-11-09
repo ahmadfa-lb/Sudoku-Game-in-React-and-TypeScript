@@ -6,26 +6,38 @@ body{
     padding: 0 10px;
     justify-content: center;
     /* min-height: 100vh; */
-    background: #603f26;
+    background: #112D4E;
   }
 
 .game-container{
+    position: relative;
     width: 850px;
-    background: #ffeac5;
+    background: #F9F7F7;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 70px;
+    /* gap: 50px; */
     padding: 60px 40px;
     box-shadow: rgba(0,0,0,0.1);
     height: 100vh;
 }
 
-.mistakes{
-  padding-bottom: 0;
-  margin-bottom: 0;
-  position: absolute;
-  margin-top: 5.5rem;
+.game-container h1{
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #4a4a4a;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #374b8d, #2102d3);
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.game-container .mistakes{
   margin-left: -16rem;
 }
 
@@ -33,33 +45,59 @@ body{
   color: #ff0000;
 }
 
-.undo-btn{
+.btns-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: .5rem;  
+}
+
+.btns-div .undo-btn{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 40px;
-  height: 50px;
-  box-shadow: 5px 5px rgba(0,0,0,0.1);
+  /* height: 50px; */
   border: none;
   border-radius: 10px;
   cursor: pointer;
   color: #325aaf;
   background-color: #ebeff5;
   font-size: 1.5rem;
-  margin-bottom: -4rem;
-  margin-left: -22.5rem;
-  
+  padding: .4rem .5rem;
+  /* margin-bottom: -4rem;
+  margin-left: -22.5rem;   */
 }
 
 .undo-btn:hover{
-  background-color: #81d4fa;
+  color: #F9F7F7;
+  background-color: #3F72AF;
 }
 
 .undo-btn b{
   font-size: .7rem;
 }
 
+.check-solution-btn{
+  /* height: 50px; */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #325aaf;
+  background-color: #ebeff5;
+  font-size: 1rem;
+  padding: .9rem .5rem;
+  /* margin-bottom: -4rem;
+  margin-left: -22.5rem; */
+}
+
+.check-solution-btn:hover{
+  color: #F9F7F7;
+  background-color: #3F72AF;
+}
 
 .game-modal {
   position: fixed;
