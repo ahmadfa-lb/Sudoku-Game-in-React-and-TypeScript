@@ -24,11 +24,11 @@
 import React from 'react';
 import '../index.css';
 import lostGif from '../assets/lost.gif';
-import victoryGif from '../assets/victory.gif'; // Import victory.gif
+import victoryGif from '../assets/victory.gif';
 
 interface BoxResultProps {
   resetGame: () => void;
-  gameResult: 'win' | 'lose'; // Use 'win' or 'lose' to determine the result
+  gameResult: 'win' | 'lose';
 }
 
 const BoxResult: React.FC<BoxResultProps> = ({ resetGame, gameResult }) => {
