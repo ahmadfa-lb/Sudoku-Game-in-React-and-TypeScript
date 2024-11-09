@@ -33,9 +33,6 @@ const App: React.FC = () => {
       const lastGridState = gridHistory[gridHistory.length - 1];
       setGrid(lastGridState);
       setGridHistory(gridHistory.slice(0, -1)); // Remove last state from history
-
-      // Optional: If the last action was a mistake, decrease mistakes count
-      setMistakes(prev => Math.max(0, prev - 1));
     }
   };
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import '../index.css'; // Your specific styles
 import { isValidSudoku } from '../validation';
@@ -42,7 +43,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         setGrid(newGrid);
         setConflictCells([]); // Reset conflicts
         setSelectedNumber(''); // Clear selected number
-        setMistakenNumber(null); // Clear mistaken number
+        // setMistakenNumber(null); // Clear mistaken number
       } else {
         setGrid(newGrid);
         setSelectedNumber(''); // Reset selected number
