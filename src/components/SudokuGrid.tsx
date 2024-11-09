@@ -29,64 +29,100 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
   const [mistakenNumber, setMistakenNumber] = useState<string | null>(null); // Track mistaken number
 
+  // useEffect(() => {
+  //   if (focusedCell && selectedNumber) {
+  //     const { row, col } = focusedCell;
+
+  //     // Temporarily update the grid for validation
+  //     const newGrid = grid.map((r, i) =>
+  //       r.map((cell, j) => (i === row && j === col ? selectedNumber : cell))
+  //     );
+
+  //     // Check if the updated grid is valid
+  //     if (isValidSudoku(newGrid)) {
+  //       setGrid(newGrid);
+  //       setConflictCells([]); // Reset conflicts
+  //       setSelectedNumber(''); // Clear selected number
+  //       setMistakenNumber(null); // Clear mistaken number
+  //     } else {
+  //       setGrid(newGrid);
+  //       setSelectedNumber(''); // Reset selected number
+  //       setMistakenNumber(selectedNumber); // Set mistaken number
+
+  //       // Identify conflicting cells and all cells with the mistaken number
+  //       const newConflictCells = [];
+  //       for (let i = 0; i < 9; i++) {
+  //         if (grid[row][i] === selectedNumber && i !== col) newConflictCells.push({ row, col: i });
+  //         if (grid[i][col] === selectedNumber && i !== row) newConflictCells.push({ row: i, col });
+  //       }
+
+  //       // Check for conflicts in the 3x3 subgrid
+  //       const startRow = Math.floor(row / 3) * 3;
+  //       const startCol = Math.floor(col / 3) * 3;
+  //       for (let i = 0; i < 3; i++) {
+  //         for (let j = 0; j < 3; j++) {
+  //           const subgridRow = startRow + i;
+  //           const subgridCol = startCol + j;
+  //           if (
+  //             grid[subgridRow][subgridCol] === selectedNumber &&
+  //             (subgridRow !== row || subgridCol !== col)
+  //           ) {
+  //             newConflictCells.push({ row: subgridRow, col: subgridCol });
+  //           }
+  //         }
+  //       }
+
+  //       setConflictCells(newConflictCells); // Set cells with conflicts
+
+  //       // Increase mistakes count
+  //       setMistakes((prev) => {
+  //         const newMistakeCount = prev + 1;
+
+  //         if (newMistakeCount >= maxMistakes) {
+  //           setGameOver(true); // Game over if max mistakes are reached
+  //         }
+
+  //         return newMistakeCount;
+  //       });
+  //     }
+  //   }
+  // }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes, setGameOver]);
+
   useEffect(() => {
     if (focusedCell && selectedNumber) {
       const { row, col } = focusedCell;
-
-      // Temporarily update the grid for validation
+  
+      // Temporarily update the grid with the new number
       const newGrid = grid.map((r, i) =>
         r.map((cell, j) => (i === row && j === col ? selectedNumber : cell))
       );
-
-      // Check if the updated grid is valid
-      if (isValidSudoku(newGrid)) {
-        setGrid(newGrid);
-        setConflictCells([]); // Reset conflicts
-        setSelectedNumber(''); // Clear selected number
-        // setMistakenNumber(null); // Clear mistaken number
+  
+      // Check if the specific cell entry is valid
+      if (isValidSudoku(newGrid, row, col)) {
+        setGrid(newGrid);              // Update grid if move is valid
+        setConflictCells([]);           // Clear conflicts
+        setSelectedNumber('');          // Clear selected number
+        setMistakenNumber(null);        // Clear mistaken number
       } else {
-        setGrid(newGrid);
-        setSelectedNumber(''); // Reset selected number
-        setMistakenNumber(selectedNumber); // Set mistaken number
-
-        // Identify conflicting cells and all cells with the mistaken number
-        const newConflictCells = [];
-        for (let i = 0; i < 9; i++) {
-          if (grid[row][i] === selectedNumber && i !== col) newConflictCells.push({ row, col: i });
-          if (grid[i][col] === selectedNumber && i !== row) newConflictCells.push({ row: i, col });
-        }
-
-        // Check for conflicts in the 3x3 subgrid
-        const startRow = Math.floor(row / 3) * 3;
-        const startCol = Math.floor(col / 3) * 3;
-        for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-            const subgridRow = startRow + i;
-            const subgridCol = startCol + j;
-            if (
-              grid[subgridRow][subgridCol] === selectedNumber &&
-              (subgridRow !== row || subgridCol !== col)
-            ) {
-              newConflictCells.push({ row: subgridRow, col: subgridCol });
-            }
-          }
-        }
-
-        setConflictCells(newConflictCells); // Set cells with conflicts
-
-        // Increase mistakes count
+        setGrid(newGrid);               // Set grid with the wrong entry
+        setSelectedNumber('');          // Reset selected number
+        setMistakenNumber(selectedNumber); // Track mistaken number
+  
+        // Mark the conflicting cell for styling
+        setConflictCells([{ row, col }]); // Mark this cell as conflicting
+  
+        // Increment mistakes only for invalid moves
         setMistakes((prev) => {
           const newMistakeCount = prev + 1;
-
           if (newMistakeCount >= maxMistakes) {
-            setGameOver(true); // Game over if max mistakes are reached
+            setGameOver(true); // End the game if max mistakes are reached
           }
-
           return newMistakeCount;
         });
       }
     }
   }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes, setGameOver]);
+  
 
   const handleCellClick = (row: number, col: number) => {
     setFocusedCell({ row, col });
