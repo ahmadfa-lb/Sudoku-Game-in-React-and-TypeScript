@@ -19,9 +19,10 @@ body {
   padding: 60px 40px;
   box-shadow: rgba(0, 0, 0, 0.1);
   height: 100vh;
+  z-index: 1;
 }
 
-.game-container h1 {
+.game-container .game-name {
   font-family: "Cinzel", serif;
   font-weight: 700;
   font-size: 2rem;
@@ -120,4 +121,20 @@ body {
 .game-modal.show {
   opacity: 1;
   pointer-events: auto;
+}
+
+
+
+/* /////////////   diff-container   /////////// */
+
+.game-container .diff{
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-left: -10rem;
+}
+
+.game-container .diff h1{
+  font-size: 1.2rem;
+  color: #325aaf;
 }

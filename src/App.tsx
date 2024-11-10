@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import SudokuGrid from './components/SudokuGrid';
 import NumberButtons from './components/NumbersBtns';
 import BoxResult from './components/BoxResult';
+import DifficultySelector from './components/DifficultySelector'
+
+
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -68,11 +71,26 @@ const App: React.FC = () => {
     }
   };
 
+
+  const difficulties = [
+    { label: 'Easy', value: 'easy' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Hard', value: 'hard' },
+  ];
+
+  const handleDifficultySelect = (difficulty: string) => {
+    console.log(`Selected difficulty: ${difficulty}`);
+  };
+
   return (
     <>
       {isGameOver && <BoxResult resetGame={resetGame} gameResult={gameResult!} />} {/* Pass gameResult */}
       <div className='game-container'>
-        <h1>Sudoku Game</h1>
+        <h1 className='game-name'>Sudoku Game</h1>
+        <div className='diff'>
+          <h1>Select Difficulty:</h1>
+          <DifficultySelector items={difficulties} onSelect={handleDifficultySelect} />
+        </div>
         <div className="mistakes">Mistakes: <span>{mistakes}/{maxMistakes}</span></div>
         <SudokuGrid 
           focusedCell={focusedCell} 
@@ -97,6 +115,8 @@ const App: React.FC = () => {
           Check Solution
         </button>
         </div>
+
+        
       </div>
     </>
   );

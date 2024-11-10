@@ -10,6 +10,7 @@
   gap: 0px;
   border: 1px solid #333;
   width: fit-content;
+  z-index: 2;
 }
 
 .sudoku-cell {
@@ -137,4 +138,42 @@
   transition: all 0.1s ease;
   /* transform: scale(1.05); */
   transform: scale3d(1.1, 1.1, 1);
+}
+
+/* ///////////////    Difficulties Selector    //////////////// */
+
+.dropdownButtonStyle {
+  padding: .2rem 20px 0px 0px;
+  cursor: pointer;
+  background-Color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 5rem;
+}
+
+.dropdownMenuStyle{
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 1000;
+}
+
+
+.optionButtonStyle{
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  width: 100%;
+  background-color: #f0f0f0;
+}
+
+.optionButtonStyle.selected{
+  color: #ccc;
+  background-color: #325aaf;
 }
