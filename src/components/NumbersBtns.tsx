@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css'; // Specific styles for the buttons
+import '../index.css';
 
 interface NumbersBtnsProps {
   onNumberClick: (number: string) => void;

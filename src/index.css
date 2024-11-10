@@ -1,10 +1,8 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-/* SudokuGrid.css */
 
 .sudoku-container {
   display: grid;
@@ -12,26 +10,33 @@
   gap: 0px;
   border: 1px solid #333;
   width: fit-content;
-  
 }
 
 .sudoku-cell {
   width: 40px;
   height: 40px;
   text-align: center;
-  border: .1px solid #ddd;
+  border: 0.1px solid #ddd;
   outline: 1px solid #333;
-  background-color: #F9F7F7;
+  background-color: #f9f7f7;
   font-size: 1.5rem;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.sudoku-cell.valid {
+  color: blue;
+}
+
+.sudoku-cell.conflict {
+  color: red;
 }
 
 .sudoku-cell.highlighted {
-  background-color: #DBE2EF; 
+  background-color: #dbe2ef;
 }
 
 .sudoku-cell.mistake-number {
-  background-color: #3F72AF;
+  background-color: #3f72af;
 }
 
 .sudoku-cell.conflict {
@@ -39,14 +44,11 @@
 }
 
 .sudoku-cell.focused {
-  background-color: #3F72AF; 
+  background-color: #3f72af;
 }
 
-
-/* Add thicker borders to separate 3x3 sections */
 .sudoku-cell.border-top {
   border-top: 2px solid #333;
-  
 }
 .sudoku-cell.border-left {
   border-left: 2px solid #333;
@@ -68,7 +70,7 @@
 .number-button {
   width: 40px;
   height: 50px;
-  box-shadow: 2px 2px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -77,12 +79,12 @@
   font-size: 2.5rem;
 }
 
-.number-button:hover{
-  color: #F9F7F7;
-  background-color: #3F72AF;
+.number-button:hover {
+  color: #f9f7f7;
+  background-color: #3f72af;
 }
 
-/* ////////////////////////////////// */
+/* //////////////// Box-results ////////////////// */
 .game-modal {
   position: fixed;
   left: 0;
@@ -100,7 +102,7 @@
   transition: opacity 0.4s ease;
 }
 
-.game-modal.show{
+.game-modal.show {
   opacity: 1;
   pointer-events: auto;
 }
@@ -124,16 +126,15 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  color: #F9F7F7;
-  background-color: #112D4E;
+  color: #f9f7f7;
+  background-color: #112d4e;
   font-size: 1.4rem;
 }
 
-.game-modal button:hover{
-  color: #F9F7F7;
-  background-color: #3F72AF;
+.game-modal button:hover {
+  color: #f9f7f7;
+  background-color: #3f72af;
   transition: all 0.1s ease;
   /* transform: scale(1.05); */
   transform: scale3d(1.1, 1.1, 1);
 }
-
