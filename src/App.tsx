@@ -3,6 +3,7 @@ import SudokuGrid from './components/SudokuGrid';
 import NumberButtons from './components/NumbersBtns';
 import BoxResult from './components/BoxResult';
 import DifficultySelector from './components/DifficultySelector'
+import { generatePuzzle } from './puzzleGenerator';
 
 
 import './App.css';
@@ -28,7 +29,6 @@ const App: React.FC = () => {
 
   const handleNumberClick = (number: string) => {
     if (focusedCell) {
-      // Save current grid to history before making a change
       setGridHistory(prevHistory => [...prevHistory, JSON.parse(JSON.stringify(grid))]);
       setSelectedNumber(number);
     }
@@ -36,16 +36,14 @@ const App: React.FC = () => {
 
   const undoLastAction = () => {
     if (gridHistory.length > 0) {
-      // Revert to the last grid state
       const lastGridState = gridHistory[gridHistory.length - 1];
       setGrid(lastGridState);
-      setGridHistory(gridHistory.slice(0, -1)); // Remove last state from history
+      setGridHistory(gridHistory.slice(0, -1));
     }
   };
 
-  const resetGame = () => {
-    setGrid(Array.from({ length: 9 }, () => Array(9).fill('')));
-    setGridHistory([]);
+  const resetGame = (difficulty: string = 'easy') => {
+    setGrid(generatePuzzle(difficulty));
     setFocusedCell(null);
     setSelectedNumber('');
     setMistakes(0);
@@ -55,16 +53,15 @@ const App: React.FC = () => {
   };
 
   const checkSolution = () => {
-    // Check if the board is completely filled
     const isBoardComplete = grid.every(row => row.every(cell => cell !== ''));
 
     if (isBoardComplete) {
       if (isValidBoard(grid)) {
         setGameResult('win');
-        setIsGameOver(true);  // Trigger the game over modal
+        setIsGameOver(true);
       } else {
         setGameResult('lose');
-        setIsGameOver(true);  // Trigger the game over modal
+        setIsGameOver(true);
       }
     } else {
       alert("The board is incomplete. Please fill in all cells.");
@@ -79,8 +76,9 @@ const App: React.FC = () => {
   ];
 
   const handleDifficultySelect = (difficulty: string) => {
-    console.log(`Selected difficulty: ${difficulty}`);
+    resetGame(difficulty);
   };
+
 
   return (
     <>
@@ -123,3 +121,6 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+

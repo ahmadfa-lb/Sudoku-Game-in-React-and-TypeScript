@@ -18,22 +18,19 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ items, onSelect
   const handleSelect = (value: string) => {
     setSelectedValue(value);
     onSelect(value);
-    setIsOpen(false); // Close the dropdown when an option is selected
+    setIsOpen(false);
   };
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  // Find the label of the selected option for display
   const selectedLabel = items.find(item => item.value === selectedValue)?.label || '🤔⁉️';
 
   return (
     <div>
-      {/* Main button to toggle dropdown */}
       <button onClick={toggleDropdown} className='dropdownButtonStyle'>
         {selectedLabel}
       </button>
       
-      {/* Render options as a list of buttons, shown only when the dropdown is open */}
       {isOpen && (
         <div className='dropdownMenuStyle'>
           {items.map(item => (
