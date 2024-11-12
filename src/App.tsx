@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SudokuGrid from './components/SudokuGrid';
 import NumberButtons from './components/NumbersBtns';
 import BoxResult from './components/BoxResult';
@@ -17,15 +17,20 @@ library.add(fas, fab);
 
 const App: React.FC = () => {
   const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill('')));
-  const [gridHistory, setGridHistory] = useState<string[][][]>([]); // Track grid history
+  const [gridHistory, setGridHistory] = useState<string[][][]>([]);
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [mistakes, setMistakes] = useState(0);
   const maxMistakes = 3;
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
-  const [gameResult, setGameResult] = useState<'win' | 'lose' | null>(null); // Manage game result
+  const [gameResult, setGameResult] = useState<'win' | 'lose' | null>(null);
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(() => {});
+  const [difficulty, setDifficulty] = useState<string>('easy');
 
+  useEffect(() => {
+    const newPuzzle = generatePuzzle(difficulty);
+    setGrid(newPuzzle);
+  }, [difficulty]);
 
   const handleNumberClick = (number: string) => {
     if (focusedCell) {
@@ -82,7 +87,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {isGameOver && <BoxResult resetGame={resetGame} gameResult={gameResult!} />} {/* Pass gameResult */}
+      {isGameOver && <BoxResult resetGame={resetGame} gameResult={gameResult!} />}
       <div className='game-container'>
         <h1 className='game-name'>Sudoku Game</h1>
         <div className='diff'>

@@ -12,7 +12,7 @@ interface DifficultySelectorProps {
 }
 
 const DifficultySelector: React.FC<DifficultySelectorProps> = ({ items, onSelect }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState<string>('easy');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleSelect = (value: string) => {
@@ -23,7 +23,7 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ items, onSelect
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const selectedLabel = items.find(item => item.value === selectedValue)?.label || '🤔⁉️';
+  const selectedLabel = items.find(item => item.value === selectedValue)?.label || 'easy';
 
   return (
     <div>
