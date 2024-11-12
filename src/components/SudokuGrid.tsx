@@ -12,8 +12,10 @@ interface SudokuGridProps {
   setMistakes: React.Dispatch<React.SetStateAction<number>>;
   maxMistakes: number;
   setSelectedNumber: React.Dispatch<React.SetStateAction<string>>;
-  setGameOver: React.Dispatch<React.SetStateAction<boolean>>; // Added game over state
+  setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setResetConflictCells: React.Dispatch<React.SetStateAction<() => void>>;
+  conflictCells:{ row: number; col: number } | null;
+  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; }[]>>;
 }
 
 const SudokuGrid: React.FC<SudokuGridProps> = ({
@@ -26,13 +28,15 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   setMistakes,
   maxMistakes,
   setGameOver,
+  conflictCells,
+  setConflictCells,
   setResetConflictCells,
 }) => {
-  const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
+  // const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
   const [mistakenNumber, setMistakenNumber] = useState<string | null>(null); // Track mistaken number
 
   useEffect(() => {
-    setResetConflictCells(() => () => setConflictCells([])); // Set function to reset conflicts
+    setResetConflictCells(() => () => setConflictCells([]));
   }, [setResetConflictCells]);
 
 

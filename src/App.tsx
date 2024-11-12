@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SudokuGrid from './components/SudokuGrid';
 import NumberButtons from './components/NumbersBtns';
 import BoxResult from './components/BoxResult';
@@ -26,6 +26,12 @@ const App: React.FC = () => {
   const [gameResult, setGameResult] = useState<'win' | 'lose' | null>(null);
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(() => {});
   const [difficulty, setDifficulty] = useState<string>('easy');
+  const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
+  const cellRefs = useRef<(HTMLInputElement | null)[][]>(
+    Array.from({ length: 9 }, () => Array(9).fill(null))
+  );
+
+
 
   useEffect(() => {
     const newPuzzle = generatePuzzle(difficulty);
@@ -44,8 +50,23 @@ const App: React.FC = () => {
       const lastGridState = gridHistory[gridHistory.length - 1];
       setGrid(lastGridState);
       setGridHistory(gridHistory.slice(0, -1));
+  
+      const lastConflictCell = conflictCells[conflictCells.length - 1];
+  
+      if (lastConflictCell) {
+        const cellElement = cellRefs.current[lastConflictCell.row][lastConflictCell.col];
+        if (cellElement) {
+          cellElement.classList.remove('highlighted');
+        }
+  
+        setConflictCells(conflictCells.slice(0, -1));
+      }
     }
   };
+  
+
+
+  
 
   const resetGame = (difficulty: string = 'easy') => {
     setGrid(generatePuzzle(difficulty));
@@ -106,6 +127,8 @@ const App: React.FC = () => {
           setMistakes={setMistakes}
           maxMistakes={maxMistakes}
           setGameOver={setIsGameOver}
+          conflictCells={conflictCells}
+          setConflictCells={setConflictCells}
           setResetConflictCells={setResetConflictCells}
         />
         <NumberButtons onNumberClick={handleNumberClick} />
@@ -118,8 +141,6 @@ const App: React.FC = () => {
           Check Solution
         </button>
         </div>
-
-        
       </div>
     </>
   );
