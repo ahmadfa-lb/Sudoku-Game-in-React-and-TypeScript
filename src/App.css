@@ -4,20 +4,19 @@ body {
   align-items: center;
   padding: 0 10px;
   justify-content: center;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   background: #112d4e;
 }
 
 .game-container {
-  position: relative;
+  /* position: relative; */
   width: 850px;
   background: #f9f7f7;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* gap: 50px; */
-  padding: 60px 40px;
-  box-shadow: rgba(0, 0, 0, 0.1);
+  padding: 30px 40px;
   height: 100vh;
   z-index: 1;
 }
@@ -34,12 +33,12 @@ body {
   color: transparent;
   font-style: italic;
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
 }
 
 .game-container .mistakes {
   margin-left: -15rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .mistakes span {
@@ -51,7 +50,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   gap: 0.5rem;
 }
 
@@ -68,7 +67,7 @@ body {
   color: #325aaf;
   background-color: #ebeff5;
   font-size: 1.5rem;
-  padding: 0.4rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   /* margin-bottom: -4rem;
   margin-left: -22.5rem;   */
 }
@@ -84,15 +83,27 @@ body {
 
 .check-solution-btn {
   /* height: 50px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   color: #325aaf;
   background-color: #ebeff5;
   font-size: 1rem;
-  padding: 0.9rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   /* margin-bottom: -4rem;
   margin-left: -22.5rem; */
+}
+
+.check-solution-btn .fa-check{
+  font-size: 1.5rem;
+}
+
+.check-solution-btn b{
+  font-size: .7rem;
 }
 
 .check-solution-btn:hover {
@@ -129,12 +140,64 @@ body {
 
 .game-container .diff{
   display: flex;
-  align-items: flex-start;
+  /* align-items: flex-start; */
+  /* position: relative; */
   gap: .5rem;
-  margin-left: -10rem;
+  margin-left: -40rem;
+  margin-bottom: 1rem;
 }
 
 .game-container .diff h1{
   font-size: 1.2rem;
   color: #325aaf;
+  margin: .3rem;
+}
+
+/* /////////////////// media queries //////////////////////// */
+
+@media (max-width: 768px){
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 0 10px; */
+    justify-content: center;
+    /* height: 100vh; */
+    background: #112d4e;
+  }
+
+
+  .game-container {
+    position: absolute;
+    top: 0;
+    left:0;
+    flex-direction: column;
+    /* padding: 30px 15px; */
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    
+  }
+
+  .game-container .game-name {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+
+
+  .game-container .diff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+    gap: .5rem;
+    margin-left: 0rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-container .mistakes {
+    margin-left: -10rem;
+    font-size: 1rem;
+  }
 }

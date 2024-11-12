@@ -112,7 +112,7 @@ const App: React.FC = () => {
       <div className='game-container'>
         <h1 className='game-name'>Sudoku Game</h1>
         <div className='diff'>
-          <h1>Select Difficulty:</h1>
+          <h1>Difficulty:</h1>
           <DifficultySelector items={difficulties} onSelect={handleDifficultySelect} />
         </div>
         <div className="mistakes">Mistakes: <span>{mistakes}/{maxMistakes}</span></div>
@@ -138,7 +138,8 @@ const App: React.FC = () => {
           <b>Undo</b>
         </button>
         <button onClick={checkSolution} className="check-solution-btn">
-          Check Solution
+        <FontAwesomeIcon icon="fa-solid fa-check" />
+          <b>Check Solution</b>
         </button>
         </div>
       </div>
