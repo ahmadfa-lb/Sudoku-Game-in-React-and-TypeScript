@@ -127,12 +127,36 @@ const App: React.FC = () => {
   
 
   const handleHint = () => {
-    const solution = solveBoard(grid); // Get the solution grid
+    const solution = solveBoard([...grid].map(row => [...row])); // Deep copy to avoid modifying `grid`
+    
     if (!solution) {
       alert("This board is unsolvable!");
       return;
     }
-  }
+  
+    // Find all empty cells in the current grid
+    const emptyCells = [];
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid[row][col] === '') {
+          emptyCells.push({ row, col });
+        }
+      }
+    }
+  
+    if (emptyCells.length === 0) {
+      alert("No empty cells to fill with a hint!");
+      return;
+    }
+  
+    // Select a random empty cell and fill it with the correct value from the solution
+    const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    const hintGrid = [...grid].map(row => [...row]); // Create a new grid state
+    hintGrid[row][col] = solution[row][col]; // Set the correct value for the hint
+  
+    setGrid(hintGrid); // Update grid with the new hint
+  };
+  
 
   const clearBoard = () => {
     setGrid(Array.from({ length: 9 }, () => Array(9).fill('')));
