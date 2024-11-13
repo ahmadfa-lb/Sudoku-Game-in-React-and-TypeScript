@@ -33,14 +33,15 @@ const App: React.FC = () => {
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(
     () => {}
   );
-
-  const [difficulty] = useState<string>("easy");
+  // const [difficulty] = useState<string>("easy");
   const [conflictCells, setConflictCells] = useState<
     { row: number; col: number }[]
   >([]);
   const cellRefs = useRef<(HTMLInputElement | null)[][]>(
     Array.from({ length: 9 }, () => Array(9).fill(null))
   );
+  const [timer, setTimer] = useState(0);
+  const [difficulty, setDifficulty] = useState<string>("easy");
 
   useEffect(() => {
     const newPuzzle = generatePuzzle(difficulty);
@@ -96,6 +97,7 @@ const App: React.FC = () => {
       if (isValidBoard(grid)) {
         setGameResult("win");
         setIsGameOver(true);
+        setTimer(0);
       } else {
         setGameResult("lose");
         setIsGameOver(true);
@@ -111,8 +113,16 @@ const App: React.FC = () => {
     { label: "Hard", value: "hard" },
   ];
 
-  const handleDifficultySelect = (difficulty: string) => {
-    resetGame(difficulty);
+  // const handleDifficultySelect = (difficulty: string) => {
+  //   resetGame(difficulty);
+  // };
+
+  const handleDifficultySelect = (newDifficulty: string) => {
+    if (difficulty === "easy"){
+      setTimer(0);
+    }
+    setDifficulty(newDifficulty); // This will trigger the useEffect and reset timer
+    resetGame(newDifficulty);
   };
 
 
@@ -167,10 +177,22 @@ const App: React.FC = () => {
     setSelectedNumber('');
     setMistakes(0);
     setConflictCells([]);
+    setTimer(0);
   };
 
-  
-  
+
+  useEffect(() => {
+    setTimer(0); // Reset timer whenever difficulty changes
+    const interval = setInterval(() => setTimer(prev => prev + 1), 1000);
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [difficulty]); // Dependency array includes difficulty
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   return (
     <>
@@ -182,15 +204,18 @@ const App: React.FC = () => {
         <h1 className="game-name">Sudoku Game</h1>
         <img src={SudokuImg} alt="Sudoku Icon" className="sudoku-image" />
         </div>
-          <DifficultySelector
+        <DifficultySelector
             items={difficulties}
             onSelect={handleDifficultySelect}
           />
-        <div className="mistakes">
-          Mistakes:{" "}
+        <div className="mistakes-timer-part">
+          <div className="mistakes">
+            Mistakes:{" "}
           <span>
             {mistakes}/{maxMistakes}
           </span>
+          </div>
+          <div className="timer">Time: {formatTime(timer)}</div>
         </div>
         <SudokuGrid
           focusedCell={focusedCell}

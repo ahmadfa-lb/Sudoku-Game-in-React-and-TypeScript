@@ -16,13 +16,13 @@
   justify-content: center;
   align-items: center;
   gap: .5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .game-container .header .sudoku-image {
   width: 30px;
   margin-bottom: 10px;
-  animation: zoomInOut 3s ease-in-out infinite;
+  animation: zoomInOut 2s ease-in-out infinite;
 }
 
 @keyframes zoomInOut {
@@ -30,7 +30,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1.3);
   }
 }
 
@@ -46,11 +46,17 @@
   color: transparent;
   font-style: italic;
   text-transform: uppercase;
-  /* margin-bottom: 1.2rem; */
+}
+
+.game-container .mistakes-timer-part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
 }
 
 .game-container .mistakes {
-  margin-left: -15rem;
+  /* margin-left: -15rem; */
   font-size: 1rem;
 }
 
@@ -162,7 +168,7 @@
   }
 
   .game-container .mistakes {
-    margin-left: -10rem;
+    /* margin-left: -10rem; */
     font-size: 1rem;
   }
 
