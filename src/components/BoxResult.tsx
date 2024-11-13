@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';
+import './BoxResult.css';
 import lostGif from '../assets/lost.gif';
 import victoryGif from '../assets/victory.gif';
 

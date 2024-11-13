@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';
+import './NumbersBtns.css';
 
 interface NumbersBtnsProps {
   onNumberClick: (number: string) => void;

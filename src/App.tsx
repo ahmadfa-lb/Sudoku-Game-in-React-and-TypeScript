@@ -5,6 +5,7 @@ import BoxResult from "./components/BoxResult";
 import DifficultySelector from "./components/DifficultySelector";
 import { generatePuzzle } from "./puzzleGenerator";
 import { solveBoard } from "./solveBoard"
+import SudokuImg from "./assets/sudoku_img.png"
 
 import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -177,14 +178,14 @@ const App: React.FC = () => {
         <BoxResult resetGame={resetGame} gameResult={gameResult!} />
       )}
       <div className="game-container">
+        <div className="header">
         <h1 className="game-name">Sudoku Game</h1>
-        <div className="diff">
-          <h1>Difficulty:</h1>
+        <img src={SudokuImg} alt="Sudoku Icon" className="sudoku-image" />
+        </div>
           <DifficultySelector
             items={difficulties}
             onSelect={handleDifficultySelect}
           />
-        </div>
         <div className="mistakes">
           Mistakes:{" "}
           <span>

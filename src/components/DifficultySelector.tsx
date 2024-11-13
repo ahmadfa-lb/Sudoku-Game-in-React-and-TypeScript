@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../index.css'
+import React, { useState } from "react";
+import "./DifficultySelector.css";
 
 interface DifficultyItem {
   label: string;
@@ -11,8 +11,11 @@ interface DifficultySelectorProps {
   onSelect: (value: string) => void;
 }
 
-const DifficultySelector: React.FC<DifficultySelectorProps> = ({ items, onSelect }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('easy');
+const DifficultySelector: React.FC<DifficultySelectorProps> = ({
+  items,
+  onSelect,
+}) => {
+  const [selectedValue, setSelectedValue] = useState<string>("easy");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleSelect = (value: string) => {
@@ -23,22 +26,25 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ items, onSelect
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const selectedLabel = items.find(item => item.value === selectedValue)?.label || 'easy';
+  const selectedLabel =
+    items.find((item) => item.value === selectedValue)?.label || "easy";
 
   return (
-    <div>
-      <button onClick={toggleDropdown} className='dropdownButtonStyle'>
+    <div className="diff">
+      <h1>Difficulty:</h1>
+      <button onClick={toggleDropdown} className="dropdownButtonStyle">
         {selectedLabel}
       </button>
-      
+
       {isOpen && (
-        <div className='dropdownMenuStyle'>
-          {items.map(item => (
+        <div className="dropdownMenuStyle">
+          {items.map((item) => (
             <button
               key={item.value}
               onClick={() => handleSelect(item.value)}
-              className={`optionButtonStyle ${item.value === selectedValue ? 'selected' : ''}`
-              }
+              className={`optionButtonStyle ${
+                item.value === selectedValue ? "selected" : ""
+              }`}
             >
               {item.label}
             </button>
