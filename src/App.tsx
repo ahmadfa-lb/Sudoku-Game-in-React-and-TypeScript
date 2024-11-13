@@ -32,7 +32,8 @@ const App: React.FC = () => {
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(
     () => {}
   );
-  const [difficulty, setDifficulty] = useState<string>("easy");
+
+  const [difficulty] = useState<string>("easy");
   const [conflictCells, setConflictCells] = useState<
     { row: number; col: number }[]
   >([]);

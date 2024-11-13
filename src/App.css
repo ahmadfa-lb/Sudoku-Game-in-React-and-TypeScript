@@ -54,12 +54,15 @@ body {
   gap: 0.5rem;
 }
 
-.btns-div .undo-btn {
+.btns-div .undo-btn,
+.btns-div .check-solution-btn,
+.btns-div .solve-btn,
+.btns-div .hint-btn,
+.btns-div .clear-board-btn{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40px;
   /* height: 50px; */
   border: none;
   border-radius: 10px;
@@ -72,38 +75,27 @@ body {
   margin-left: -22.5rem;   */
 }
 
-.undo-btn:hover {
+.btns-div .undo-btn:hover,
+.btns-div .check-solution-btn:hover,
+.btns-div .solve-btn:hover,
+.btns-div .hint-btn:hover,
+.btns-div .clear-board-btn:hover {
   color: #f9f7f7;
   background-color: #3f72af;
 }
 
-.undo-btn b {
+.btns-div .undo-btn b,
+.btns-div .check-solution-btn b,
+.btns-div .solve-btn b,
+.btns-div .hint-btn b,
+.btns-div .clear-board-btn b
+{
+  padding-top: .5rem;
   font-size: 0.7rem;
-}
-
-.check-solution-btn {
-  /* height: 50px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #325aaf;
-  background-color: #ebeff5;
-  font-size: 1rem;
-  padding: 0.5rem 0.5rem;
-  /* margin-bottom: -4rem;
-  margin-left: -22.5rem; */
 }
 
 .check-solution-btn .fa-check{
   font-size: 1.5rem;
-}
-
-.check-solution-btn b{
-  font-size: .7rem;
 }
 
 .check-solution-btn:hover {
