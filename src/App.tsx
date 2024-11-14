@@ -13,6 +13,8 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { isValidBoard } from "./validation";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 library.add(fas, fab);
 
@@ -103,7 +105,18 @@ const App: React.FC = () => {
         setIsGameOver(true);
       }
     } else {
-      alert("The board is incomplete. Please fill in all cells.");
+      // alert("The board is incomplete. Please fill in all cells.");
+      toast.error("Conflict detected! This number can't go here!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
     }
   };
 
@@ -133,7 +146,17 @@ const App: React.FC = () => {
     if (solution) {
       setGrid(solution); // Display solution on the board
     } else {
-      alert("This board is unsolvable!");
+      toast.error('Unsolvable board! Check for any duplicate numbers in rows, columns, or boxes!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
     }
   };
   
@@ -142,7 +165,17 @@ const App: React.FC = () => {
     const solution = solveBoard([...grid].map(row => [...row])); // Deep copy to avoid modifying `grid`
     
     if (!solution) {
-      alert("This board is unsolvable!");
+      toast.error('No possible solution. Review entries for mistakes😊!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
       return;
     }
   
@@ -157,7 +190,17 @@ const App: React.FC = () => {
     }
   
     if (emptyCells.length === 0) {
-      alert("No empty cells to fill with a hint!");
+        toast.info('Nothing left to solve—try verifying your solution🙂!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
       return;
     }
   
@@ -254,6 +297,7 @@ const App: React.FC = () => {
             <FontAwesomeIcon icon="fa-solid fa-eraser" />
             <b>Clear Board</b>
           </button>
+          <ToastContainer />
         </div>
       </div>
     </>
