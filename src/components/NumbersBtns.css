@@ -15,9 +15,26 @@
   color: #325aaf;
   background-color: #ebeff5;
   font-size: 2.5rem;
+  transition: transform .3s ease;
 }
 
 .number-button:hover {
   color: #f9f7f7;
   background-color: #3f72af;
+}
+
+.number-button:active{
+  animation: clickEffect .3s forwards;
+}
+
+@keyframes clickEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

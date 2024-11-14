@@ -44,6 +44,7 @@ const App: React.FC = () => {
   );
   const [timer, setTimer] = useState(0);
   const [difficulty, setDifficulty] = useState<string>("easy");
+  const [hintCount, setHintCount] = useState(3); // Limit number of hints
 
   useEffect(() => {
     const newPuzzle = generatePuzzle(difficulty);
@@ -106,7 +107,7 @@ const App: React.FC = () => {
       }
     } else {
       // alert("The board is incomplete. Please fill in all cells.");
-      toast.error("Conflict detected! This number can't go here!", {
+      toast.error("Hang in there! No empty cells allowed for completion📲!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -161,35 +162,91 @@ const App: React.FC = () => {
   };
   
 
-  const handleHint = () => {
-    const solution = solveBoard([...grid].map(row => [...row])); // Deep copy to avoid modifying `grid`
+  // const handleHint = () => {
+  //   const solution = solveBoard([...grid].map(row => [...row])); // Deep copy to avoid modifying `grid`
     
-    if (!solution) {
-      toast.error('No possible solution. Review entries for mistakes😊!', {
+  //   if (!solution) {
+  //     toast.error('No possible solution. Review entries for mistakes😊!', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //       });
+  //     return;
+  //   }
+  
+  //   // Find all empty cells in the current grid
+  //   const emptyCells = [];
+  //   for (let row = 0; row < 9; row++) {
+  //     for (let col = 0; col < 9; col++) {
+  //       if (grid[row][col] === '') {
+  //         emptyCells.push({ row, col });
+  //       }
+  //     }
+  //   }
+  
+  //   if (emptyCells.length === 0) {
+  //       toast.info('Nothing left to solve—try verifying your solution🙂!', {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         transition: Bounce,
+  //         });
+  //     return;
+  //   }
+  
+  //   // Select a random empty cell and fill it with the correct value from the solution
+  //   const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  //   const hintGrid = [...grid].map(row => [...row]); // Create a new grid state
+  //   hintGrid[row][col] = solution[row][col]; // Set the correct value for the hint
+  
+  //   setGrid(hintGrid); // Update grid with the new hint
+  // };
+
+   // Handle hint request with conflict and limit check
+   const handleHint = () => {
+    const solution = solveBoard([...grid].map(row => [...row]));
+
+    // Check for conflicts before giving a hint
+    const hasConflicts = conflictCells.length > 0 || !solution;
+    if (hasConflicts) {
+      toast.warn("Resolve conflicts first!", {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
+      });
       return;
     }
-  
-    // Find all empty cells in the current grid
-    const emptyCells = [];
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        if (grid[row][col] === '') {
-          emptyCells.push({ row, col });
+
+    // Check if hints are available
+    if (hintCount <= 0) {
+      toast.info("No hints left.", { position: "top-right", autoClose: 5000 });
+      return;
+    }
+
+    // If solution exists, give hint
+    if (solution) {
+      const emptyCells = [];
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          if (grid[row][col] === "") {
+            emptyCells.push({ row, col });
+          }
         }
       }
-    }
-  
-    if (emptyCells.length === 0) {
+
+      if (emptyCells.length === 0) {
         toast.info('Nothing left to solve—try verifying your solution🙂!', {
           position: "top-right",
           autoClose: 5000,
@@ -203,13 +260,18 @@ const App: React.FC = () => {
           });
       return;
     }
-  
-    // Select a random empty cell and fill it with the correct value from the solution
-    const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-    const hintGrid = [...grid].map(row => [...row]); // Create a new grid state
-    hintGrid[row][col] = solution[row][col]; // Set the correct value for the hint
-  
-    setGrid(hintGrid); // Update grid with the new hint
+
+      if (emptyCells.length > 0) {
+        const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        const hintGrid = [...grid].map(row => [...row]);
+        hintGrid[row][col] = solution[row][col];
+
+        setGrid(hintGrid);
+        setHintCount(hintCount - 1); // Decrease hint count
+      }
+    } else {
+      toast.error("This board is unsolvable!", { position: "top-right", autoClose: 5000 });
+    }
   };
   
 
@@ -289,11 +351,20 @@ const App: React.FC = () => {
             <FontAwesomeIcon icon="fa-solid fa-brain" />
             <b>Solve</b>
           </button>
-          <button onClick={handleHint} className="hint-btn">
+          {/* <button onClick={handleHint} className="hint-btn">
             <FontAwesomeIcon icon="fa-solid fa-lightbulb" />
             <b>Hint</b>
+          </button> */}
+          <button
+            onClick={handleHint}
+            className={'hint-btn'}
+            disabled={hintCount <= 0} // Disable button if no hints left
+          >
+            <FontAwesomeIcon icon="fa-solid fa-lightbulb" />
+            <b>Hint</b>
+            <b className="hints-nbrs">{hintCount}</b>
           </button>
-          <button onClick={clearBoard} className="clear-board-btn">
+          <button onClick={clearBoard} className={'clear-board-btn'}>
             <FontAwesomeIcon icon="fa-solid fa-eraser" />
             <b>Clear Board</b>
           </button>
