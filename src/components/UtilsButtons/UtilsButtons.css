@@ -1,0 +1,80 @@
+.btns-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 0.5rem;
+}
+
+.btns-div .undo-btn,
+.btns-div .check-solution-btn,
+.btns-div .solve-btn,
+.btns-div .hint-btn,
+.btns-div .clear-board-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 50px; */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #325aaf;
+  background-color: #ebeff5;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.5rem;
+  transition: transform 0.3s ease;
+  /* margin-bottom: -4rem;
+    margin-left: -22.5rem;   */
+}
+
+.btns-div .undo-btn:hover,
+.btns-div .check-solution-btn:hover,
+.btns-div .solve-btn:hover,
+.btns-div .hint-btn:hover,
+.btns-div .clear-board-btn:hover {
+  color: #f9f7f7;
+  background-color: #3f72af;
+}
+
+.btns-div .undo-btn:active,
+.btns-div .check-solution-btn:active,
+.btns-div .solve-btn:active,
+.btns-div .hint-btn:active,
+.btns-div .clear-board-btn:active {
+  animation: clickEffect 0.3s forwards;
+}
+
+@keyframes clickEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btns-div .undo-btn b,
+.btns-div .check-solution-btn b,
+.btns-div .solve-btn b,
+.btns-div .hint-btn b,
+.btns-div .clear-board-btn b {
+  padding-top: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.btns-div .hint-btn .hints-nbrs {
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  width: 1rem;
+  padding: 0.1rem 0;
+  position: absolute;
+  margin-bottom: 2.5rem;
+  margin-left: 1rem;
+}

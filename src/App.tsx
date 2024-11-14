@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import SudokuGrid from "./components/SudokuGrid";
 import NumberButtons from "./components/NumbersBtns";
 import BoxResult from "./components/BoxResult";
+import UtilsButtons from "./components/UtilsButtons/UtilsButtons"
 import DifficultySelector from "./components/DifficultySelector";
 import { generatePuzzle } from "./puzzleGenerator";
 import { solveBoard } from "./solveBoard";
@@ -61,25 +62,25 @@ const App: React.FC = () => {
     }
   };
 
-  const undoLastAction = () => {
-    if (gridHistory.length > 0) {
-      const lastGridState = gridHistory[gridHistory.length - 1];
-      setGrid(lastGridState);
-      setGridHistory(gridHistory.slice(0, -1));
+  // const undoLastAction = () => {
+  //   if (gridHistory.length > 0) {
+  //     const lastGridState = gridHistory[gridHistory.length - 1];
+  //     setGrid(lastGridState);
+  //     setGridHistory(gridHistory.slice(0, -1));
 
-      const lastConflictCell = conflictCells[conflictCells.length - 1];
+  //     const lastConflictCell = conflictCells[conflictCells.length - 1];
 
-      if (lastConflictCell) {
-        const cellElement =
-          cellRefs.current[lastConflictCell.row][lastConflictCell.col];
-        if (cellElement) {
-          cellElement.classList.remove("highlighted");
-        }
+  //     if (lastConflictCell) {
+  //       const cellElement =
+  //         cellRefs.current[lastConflictCell.row][lastConflictCell.col];
+  //       if (cellElement) {
+  //         cellElement.classList.remove("highlighted");
+  //       }
 
-        setConflictCells(conflictCells.slice(0, -1));
-      }
-    }
-  };
+  //       setConflictCells(conflictCells.slice(0, -1));
+  //     }
+  //   }
+  // };
 
   const resetGame = (difficulty: string = "easy") => {
     setGrid(generatePuzzle(difficulty));
@@ -92,35 +93,35 @@ const App: React.FC = () => {
     setHintCount(3);
   };
 
-  const checkSolution = () => {
-    const isBoardComplete = grid.every((row) =>
-      row.every((cell) => cell !== "")
-    );
+  // const checkSolution = () => {
+  //   const isBoardComplete = grid.every((row) =>
+  //     row.every((cell) => cell !== "")
+  //   );
 
-    if (isBoardComplete) {
-      if (isValidBoard(grid)) {
-        setGameResult("win");
-        setIsGameOver(true);
-        setTimer(0);
-      } else {
-        setGameResult("lose");
-        setIsGameOver(true);
-      }
-    } else {
-      // alert("The board is incomplete. Please fill in all cells.");
-      toast.error("Hang in there! No empty cells allowed for completion📲!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
-  };
+  //   if (isBoardComplete) {
+  //     if (isValidBoard(grid)) {
+  //       setGameResult("win");
+  //       setIsGameOver(true);
+  //       setTimer(0);
+  //     } else {
+  //       setGameResult("lose");
+  //       setIsGameOver(true);
+  //     }
+  //   } else {
+  //     // alert("The board is incomplete. Please fill in all cells.");
+  //     toast.error("Hang in there! No empty cells allowed for completion📲!", {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //     });
+  //   }
+  // };
 
   const difficulties = [
     { label: "Easy", value: "easy" },
@@ -140,102 +141,101 @@ const App: React.FC = () => {
     resetGame(newDifficulty);
   };
 
-  const handleSolve = () => {
-    const solution = solveBoard([...grid].map((row) => [...row])); // Deep copy grid
-    if (solution) {
-      // Save current grid to history before displaying the solution
-      setGridHistory((prevHistory) => [
-        ...prevHistory,
-        JSON.parse(JSON.stringify(grid)),
-      ]);
+  // const handleSolve = () => {
+  //   const solution = solveBoard([...grid].map((row) => [...row])); // Deep copy grid
+  //   if (solution) {
+  //     // Save current grid to history before displaying the solution
+  //     setGridHistory((prevHistory) => [
+  //       ...prevHistory,
+  //       JSON.parse(JSON.stringify(grid)),
+  //     ]);
 
-      setGrid(solution); // Display solution on the board
-    } else {
-      toast.error(
-        "Unsolvable board! Check for any duplicate numbers in rows, columns, or boxes!",
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        }
-      );
-    }
-  };
+  //     setGrid(solution); // Display solution on the board
+  //   } else {
+  //     toast.error(
+  //       "Unsolvable board! Check for any duplicate numbers in rows, columns, or boxes!",
+  //       {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         transition: Bounce,
+  //       }
+  //     );
+  //   }
+  // };
 
-  // Handle hint request with conflict and limit check
-  const handleHint = () => {
-    const solution = solveBoard([...grid].map((row) => [...row]));
+  // const handleHint = () => {
+  //   const solution = solveBoard([...grid].map((row) => [...row]));
 
-    // Check for conflicts before giving a hint
-    const hasConflicts = conflictCells.length > 0 || !solution;
-    if (hasConflicts) {
-      toast.warn("Resolve conflicts first!", {
-        position: "top-right",
-        autoClose: 5000,
-        theme: "light",
-        transition: Bounce,
-      });
-      return;
-    }
+  //   // Check for conflicts before giving a hint
+  //   const hasConflicts = conflictCells.length > 0 || !solution;
+  //   if (hasConflicts) {
+  //     toast.warn("Resolve conflicts first!", {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       theme: "light",
+  //       transition: Bounce,
+  //     });
+  //     return;
+  //   }
 
-    if (hintCount <= 0) {
-      toast.info("No hints left 🙂!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      return;
-    }
+  //   if (hintCount <= 0) {
+  //     toast.info("No hints left 🙂!", {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //     });
+  //     return;
+  //   }
 
-    // If solution exists, give hint
-    if (solution) {
-      const emptyCells = [];
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (grid[row][col] === "") {
-            emptyCells.push({ row, col });
-          }
-        }
-      }
+  //   // If solution exists, give hint
+  //   if (solution) {
+  //     const emptyCells = [];
+  //     for (let row = 0; row < 9; row++) {
+  //       for (let col = 0; col < 9; col++) {
+  //         if (grid[row][col] === "") {
+  //           emptyCells.push({ row, col });
+  //         }
+  //       }
+  //     }
 
-      if (emptyCells.length === 0) {
-        toast.info("Nothing left to solve—try verifying your solution🙂!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        return;
-      }
+  //     if (emptyCells.length === 0) {
+  //       toast.info("Nothing left to solve—try verifying your solution🙂!", {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         transition: Bounce,
+  //       });
+  //       return;
+  //     }
 
-      if (emptyCells.length > 0) {
-        const { row, col } =
-          emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        const hintGrid = [...grid].map((row) => [...row]);
-        hintGrid[row][col] = solution[row][col];
+  //     if (emptyCells.length > 0) {
+  //       const { row, col } =
+  //         emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  //       const hintGrid = [...grid].map((row) => [...row]);
+  //       hintGrid[row][col] = solution[row][col];
 
-        setGrid(hintGrid);
-        setHintCount(hintCount - 1);
-      }
-    }
-  };
+  //       setGrid(hintGrid);
+  //       setHintCount(hintCount - 1);
+  //     }
+  //   }
+  // };
 
   const clearBoard = () => {
     setGrid(Array.from({ length: 9 }, () => Array(9).fill("")));
@@ -301,7 +301,7 @@ const App: React.FC = () => {
           setResetConflictCells={setResetConflictCells}
         />
         <NumberButtons onNumberClick={handleNumberClick} />
-        <div className="btns-div">
+        {/* <div className="btns-div">
           <button className="undo-btn" onClick={undoLastAction}>
             <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-left" />
             <b>Undo</b>
@@ -328,7 +328,27 @@ const App: React.FC = () => {
             <b>Clear Board</b>
           </button>
           <ToastContainer />
-        </div>
+        </div> */}
+
+        <UtilsButtons 
+          grid={grid}
+          setGrid={setGrid}
+          cellRefs={cellRefs}
+          gridHistory={gridHistory}
+          setGridHistory={setGridHistory}
+          setFocusedCell={setFocusedCell}
+        setSelectedNumber={setSelectedNumber}
+        conflictCells={[]}
+        setConflictCells={() => {}}
+        setMistakes={setMistakes}
+        setIsGameOver={setIsGameOver}
+        setGameResult={setGameResult}
+        hintCount={hintCount}
+        setHintCount={setHintCount}
+        clearBoard={clearBoard}
+        timer={timer}
+        setTimer={setTimer}
+        />
       </div>
     </>
   );
