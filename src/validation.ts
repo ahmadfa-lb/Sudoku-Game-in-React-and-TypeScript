@@ -1,5 +1,3 @@
-// // Utility function to check if the grid meets Sudoku rules
-// Utility function to check if the grid meets Sudoku rules and contains no empty cells
 export const isValidBoard = (grid: string[][]): boolean => {
   const isUniqueAndFilled = (arr: string[]) => {
     // Fail if there are any empty cells
