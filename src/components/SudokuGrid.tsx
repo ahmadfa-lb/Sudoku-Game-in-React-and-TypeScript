@@ -16,7 +16,7 @@ interface SudokuGridProps {
   setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setResetConflictCells: React.Dispatch<React.SetStateAction<() => void>>;
   conflictCells: { row: number; col: number; color: 'conflict' | 'valid' }[];
-  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; }[]>>;
+  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; color: 'conflict' | 'valid' }[]>>;
   cellRefs: React.RefObject<(HTMLInputElement | null)[][]>;
 }
 

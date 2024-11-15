@@ -6,6 +6,7 @@ import { isValidBoard } from "../../validation";
 import { solveBoard } from "../../solveBoard";
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faArrowRotateLeft, faCheck, faBrain, faLightbulb, faEraser } from "@fortawesome/free-solid-svg-icons";
 
 interface UtilsButtonsProps {
   grid: string[][];
@@ -13,63 +14,71 @@ interface UtilsButtonsProps {
   cellRefs: React.RefObject<(HTMLInputElement | null)[][]>;
   gridHistory: string[][][];
   setGridHistory: React.Dispatch<React.SetStateAction<string[][][]>>;
-  setFocusedCell: React.Dispatch<
-    React.SetStateAction<{ row: number; col: number } | null>
-  >;
-  setSelectedNumber: React.Dispatch<React.SetStateAction<string>>;
-  conflictCells: { row: number; col: number }[];
-  setConflictCells: React.Dispatch<
-    React.SetStateAction<{ row: number; col: number }[]>
-  >;
-  setMistakes: React.Dispatch<React.SetStateAction<number>>;
+  conflictCells: { row: number; col: number; color: 'conflict' | 'valid'}[];
+  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; color: 'conflict' | 'valid' }[]>>;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setGameResult: React.Dispatch<React.SetStateAction<"win" | "lose" | null>>;
   hintCount: number;
   setHintCount: React.Dispatch<React.SetStateAction<number>>;
   clearBoard: () => void;
-  timer: number;
   setTimer: React.Dispatch<React.SetStateAction<number>>;
-
 }
 
 const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   grid,
   setGrid,
-  timer,
   setTimer,
   cellRefs,
   gridHistory,
   setGridHistory,
-  setFocusedCell,
-  setSelectedNumber,
   conflictCells,
   setConflictCells,
-  setMistakes,
   setIsGameOver,
   setGameResult,
   hintCount,
   setHintCount,
   clearBoard,
 }) => {
+  // const undoLastAction = () => {
+  //   if (gridHistory.length > 0) {
+  //     const lastGridState = gridHistory[gridHistory.length - 1];
+  //     setGrid(lastGridState);
+  //     setGridHistory(gridHistory.slice(0, -1));
+
+  //     const lastConflictCell = conflictCells[conflictCells.length - 1];
+
+  //     if (lastConflictCell) {
+  //       const cellElement =
+  //         cellRefs.current[lastConflictCell.row][lastConflictCell.col];
+  //       if (cellElement) {
+  //         cellElement.classList.remove("highlighted");
+  //       }
+
+  //       setConflictCells(conflictCells.slice(0, -1));
+  //     }
+  //   }
+  // };
+
   const undoLastAction = () => {
     if (gridHistory.length > 0) {
       const lastGridState = gridHistory[gridHistory.length - 1];
       setGrid(lastGridState);
       setGridHistory(gridHistory.slice(0, -1));
-
+  
       const lastConflictCell = conflictCells[conflictCells.length - 1];
-
-      if (lastConflictCell) {
+  
+      if (lastConflictCell && cellRefs.current) {
         const cellElement =
           cellRefs.current[lastConflictCell.row][lastConflictCell.col];
         if (cellElement) {
           cellElement.classList.remove("highlighted");
         }
-
+  
         setConflictCells(conflictCells.slice(0, -1));
       }
     }
   };
+  
 
   const checkSolution = () => {
     const isBoardComplete = grid.every((row) =>
@@ -81,6 +90,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
         setGameResult("win");
         setIsGameOver(true);
         setTimer(0);
+        setGridHistory([]);
       } else {
         setGameResult("lose");
         setIsGameOver(true);
@@ -201,15 +211,15 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     <>
       <div className="btns-div">
         <button className="undo-btn" onClick={undoLastAction}>
-          <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-left" />
+          <FontAwesomeIcon icon={faArrowRotateLeft} />
           <b>Undo</b>
         </button>
         <button onClick={checkSolution} className="check-solution-btn">
-          <FontAwesomeIcon icon="fa-solid fa-check" />
+          <FontAwesomeIcon icon={faCheck} />
           <b>Check Solution</b>
         </button>
         <button onClick={handleSolve} className="solve-btn">
-          <FontAwesomeIcon icon="fa-solid fa-brain" />
+          <FontAwesomeIcon icon={faBrain} />
           <b>Solve</b>
         </button>
         <button
@@ -217,12 +227,12 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
           className={"hint-btn"}
           // disabled={hintCount <= 0}
         >
-          <FontAwesomeIcon icon="fa-solid fa-lightbulb" />
+          <FontAwesomeIcon icon={faLightbulb} />
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
         <button onClick={clearBoard} className={"clear-board-btn"}>
-          <FontAwesomeIcon icon="fa-solid fa-eraser" />
+          <FontAwesomeIcon icon={faEraser} />
           <b>Clear Board</b>
         </button>
         <ToastContainer />

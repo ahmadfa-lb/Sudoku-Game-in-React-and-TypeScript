@@ -37,9 +37,8 @@ const App: React.FC = () => {
     () => {}
   );
   // const [difficulty] = useState<string>("easy");
-  const [conflictCells, setConflictCells] = useState<
-    { row: number; col: number; color: 'conflict' | 'valid' }[]
-  >([]);
+  const [conflictCells, setConflictCells] = useState<{ row: number; col: number; color: 'conflict' | 'valid' }[]>([]);
+
   const cellRefs = useRef<(HTMLInputElement | null)[][]>(
     Array.from({ length: 9 }, () => Array(9).fill(null))
   );
@@ -51,8 +50,6 @@ const App: React.FC = () => {
     const newPuzzle = generatePuzzle(difficulty);
     setGrid(newPuzzle);
 
-    // cellRefs.current = newPuzzle.map(() =>
-    //   Array(9).fill(null));
   }, [difficulty]);
 
   const handleNumberClick = (number: string) => {
@@ -86,7 +83,7 @@ const App: React.FC = () => {
     if (difficulty === "easy") {
       setTimer(0);
     }
-    setDifficulty(newDifficulty); // This will trigger the useEffect and reset timer
+    setDifficulty(newDifficulty);
     resetGame(newDifficulty);
   };
 
@@ -118,7 +115,7 @@ const App: React.FC = () => {
   return (
     <>
       {isGameOver && (
-        <BoxResult resetGame={resetGame} gameResult={gameResult!} />
+        <BoxResult resetGame={resetGame} gameResult={gameResult!} currentDifficulty={difficulty}  />
       )}
       <div className="game-container">
         <div className="header">
@@ -161,17 +158,13 @@ const App: React.FC = () => {
           cellRefs={cellRefs}
           gridHistory={gridHistory}
           setGridHistory={setGridHistory}
-          setFocusedCell={setFocusedCell}
-          setSelectedNumber={setSelectedNumber}
           conflictCells={conflictCells}
           setConflictCells={setConflictCells}
-          setMistakes={setMistakes}
           setIsGameOver={setIsGameOver}
           setGameResult={setGameResult}
           hintCount={hintCount}
           setHintCount={setHintCount}
           clearBoard={clearBoard}
-          timer={timer}
           setTimer={setTimer}
         />
       </div>
