@@ -21,8 +21,8 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  color: #325aaf;
-  background-color: #ebeff5;
+  color: #4C3BCF;
+  background-color: #C2D9FF;
   font-size: 1.5rem;
   padding: 0.5rem 0.5rem;
   transition: transform 0.3s ease;
@@ -36,7 +36,7 @@
 .btns-div .hint-btn:hover,
 .btns-div .clear-board-btn:hover {
   color: #f9f7f7;
-  background-color: #3f72af;
+  background-color: #4C3BCF;
 }
 
 .btns-div .undo-btn:active,
@@ -72,9 +72,51 @@
   color: white;
   background-color: red;
   border-radius: 50%;
-  width: 1rem;
-  padding: 0.1rem 0;
+  width: 1.2rem;
+  padding: 0.1rem 0 0 0;
   position: absolute;
-  margin-bottom: 2.5rem;
-  margin-left: 1rem;
+  margin-bottom: 3.2rem;
+  margin-left: 1.8rem;
+  font-size: 1rem;
+}
+
+
+.tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4C3BCF;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: none;
+  pointer-events: none;
+}
+
+.solve-btn:hover .tooltip {
+  display: block;
+  cursor: default;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #4C3BCF transparent transparent transparent;
+}
+
+
+.solve-btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

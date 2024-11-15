@@ -188,7 +188,7 @@ return (
 
         return (
           <input
-            title='cell-input'
+            title='🤔'
             key={`${i}-${j}`}
             ref={(el) => {
               if (cellRefs.current) {

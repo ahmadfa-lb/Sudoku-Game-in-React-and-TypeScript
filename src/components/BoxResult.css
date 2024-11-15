@@ -32,7 +32,6 @@
 
 .game-modal img {
   max-width: 100%;
-  margin-bottom: 20px;
 }
 
 .game-modal button {
@@ -40,14 +39,14 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  color: #f9f7f7;
-  background-color: #112d4e;
+  color: #4C3BCF;
+  background-color: #C2D9FF;
   font-size: 1.4rem;
 }
 
 .game-modal button:hover {
   color: #f9f7f7;
-  background-color: #3f72af;
+  background-color: #4C3BCF;
   transition: all 0.1s ease;
   /* transform: scale(1.05); */
   transform: scale3d(1.1, 1.1, 1);

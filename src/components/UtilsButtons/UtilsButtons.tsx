@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./UtilsButtons.css";
@@ -6,7 +6,13 @@ import { isValidBoard } from "../../validation";
 import { solveBoard } from "../../solveBoard";
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { faArrowRotateLeft, faCheck, faBrain, faLightbulb, faEraser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRotateLeft,
+  faCheck,
+  faBrain,
+  faLightbulb,
+  faEraser,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface UtilsButtonsProps {
   grid: string[][];
@@ -14,8 +20,12 @@ interface UtilsButtonsProps {
   cellRefs: React.RefObject<(HTMLInputElement | null)[][]>;
   gridHistory: string[][][];
   setGridHistory: React.Dispatch<React.SetStateAction<string[][][]>>;
-  conflictCells: { row: number; col: number; color: 'conflict' | 'valid'}[];
-  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; color: 'conflict' | 'valid' }[]>>;
+  conflictCells: { row: number; col: number; color: "conflict" | "valid" }[];
+  setConflictCells: React.Dispatch<
+    React.SetStateAction<
+      { row: number; col: number; color: "conflict" | "valid" }[]
+    >
+  >;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setGameResult: React.Dispatch<React.SetStateAction<"win" | "lose" | null>>;
   hintCount: number;
@@ -58,27 +68,28 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   //     }
   //   }
   // };
+  const [hasCleared, setHasCleared] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const undoLastAction = () => {
     if (gridHistory.length > 0) {
       const lastGridState = gridHistory[gridHistory.length - 1];
       setGrid(lastGridState);
       setGridHistory(gridHistory.slice(0, -1));
-  
+
       const lastConflictCell = conflictCells[conflictCells.length - 1];
-  
+
       if (lastConflictCell && cellRefs.current) {
         const cellElement =
           cellRefs.current[lastConflictCell.row][lastConflictCell.col];
         if (cellElement) {
           cellElement.classList.remove("highlighted");
         }
-  
+
         setConflictCells(conflictCells.slice(0, -1));
       }
     }
   };
-  
 
   const checkSolution = () => {
     const isBoardComplete = grid.every((row) =>
@@ -91,9 +102,11 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
         setIsGameOver(true);
         setTimer(0);
         setGridHistory([]);
+        setHasCleared(false);
       } else {
         setGameResult("lose");
         setIsGameOver(true);
+        setHasCleared(false);
       }
     } else {
       toast.error("Hang in there! No empty cells allowed for completion📲!", {
@@ -110,7 +123,6 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     }
   };
 
-
   const handleSolve = () => {
     const solution = solveBoard([...grid].map((row) => [...row])); // Deep copy grid
     if (solution) {
@@ -120,7 +132,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
         JSON.parse(JSON.stringify(grid)),
       ]);
 
-      setGrid(solution); // Display solution on the board
+      setGrid(solution);
     } else {
       toast.error(
         "Unsolvable board! Check for any duplicate numbers in rows, columns, or boxes!",
@@ -207,6 +219,11 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     }
   };
 
+  const handleClearBoard = () => {
+    clearBoard();
+    setHasCleared(true);
+  };
+
   return (
     <>
       <div className="btns-div">
@@ -218,9 +235,27 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
           <FontAwesomeIcon icon={faCheck} />
           <b>Check Solution</b>
         </button>
-        <button onClick={handleSolve} className="solve-btn">
+        {/* <button onClick={handleSolve} className="solve-btn" disabled={!hasCleared} onMouseEnter={setIsHoveredin}
+        onMouseLeave={() => setIsHoveredout()}>
           <FontAwesomeIcon icon={faBrain} />
           <b>Solve</b>
+          <b className="tooltip">
+            you should manually enter a board to solve it!
+          </b>
+        </button> */}
+
+        <button
+          onClick={handleSolve}
+          className="solve-btn"
+          disabled={!hasCleared}
+        >
+          <FontAwesomeIcon icon={faBrain} />
+          <b>Solve</b>
+          {!hasCleared && !isHovered && (
+            <span className="tooltip">
+              You should manually enter a board to solve it!
+            </span>
+          )}
         </button>
         <button
           onClick={handleHint}
@@ -231,7 +266,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
-        <button onClick={clearBoard} className={"clear-board-btn"}>
+        <button onClick={handleClearBoard} className={"clear-board-btn"}>
           <FontAwesomeIcon icon={faEraser} />
           <b>Clear Board</b>
         </button>

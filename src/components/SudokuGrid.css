@@ -2,17 +2,18 @@
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   gap: 0px;
-  border: 1px solid #333;
+  border: 2px solid #000;
   width: fit-content;
   z-index: 2;
+  box-shadow: 0px 0px 60px 6px rgba(0, 0, 0, 0.2);
 }
 
 .sudoku-cell {
   width: 40px;
   height: 40px;
   text-align: center;
-  border: 0.1px solid #ddd;
-  outline: 1px solid #333;
+  border: .1px solid #ddd;
+  /* outline: 1px solid #333; */
   background-color: #f9f7f7;
   font-size: 1.5rem;
   cursor: pointer;
@@ -27,30 +28,30 @@
 }
 
 .sudoku-cell.highlighted {
-  background-color: #dbe2ef;
+  background-color: #C2D9FF;
 }
 
-.sudoku-cell.mistake-number {
+/* .sudoku-cell.mistake-number {
   background-color: #3f72af;
-}
+} */
 
 .sudoku-cell.conflict {
   background-color: #f58282;
 }
 
 .sudoku-cell.focused {
-  background-color: #3f72af;
+  background-color: #4C3BCF;
 }
 
 .sudoku-cell.border-top {
-  border-top: 2px solid #333;
+  border-top: 2px solid #000;
 }
 .sudoku-cell.border-left {
-  border-left: 2px solid #333;
+  border-left: 2px solid #000;
 }
 .sudoku-cell.border-right {
-  border-right: 2px solid #333;
+  border-right: 2px solid #000;
 }
 .sudoku-cell.border-bottom {
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid #000;
 }

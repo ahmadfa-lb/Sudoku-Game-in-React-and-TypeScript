@@ -12,15 +12,15 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  color: #325aaf;
-  background-color: #ebeff5;
+  color: #4C3BCF;
+  background-color: #C2D9FF;
   font-size: 2.5rem;
   transition: transform .3s ease;
 }
 
 .number-button:hover {
   color: #f9f7f7;
-  background-color: #3f72af;
+  background-color: #4C3BCF;
 }
 
 .number-button:active{
