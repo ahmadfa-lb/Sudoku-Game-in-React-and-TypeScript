@@ -32,6 +32,9 @@ const App: React.FC = () => {
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(
     () => {}
   );
+  const [highlightedCells, setHighlightedCells] = useState<
+  { row: number; col: number; color: "focused" | "conflict" }[]
+>([]);
 
   const [conflictCells, setConflictCells] = useState<{ row: number; col: number; color: 'conflict' | 'valid' }[]>([]);
 
@@ -91,6 +94,7 @@ const App: React.FC = () => {
     setMistakes(0);
     setConflictCells([]);
     setTimer(0);
+    setHighlightedCells([]);
   };
 
   useEffect(() => {
@@ -146,6 +150,8 @@ const App: React.FC = () => {
           conflictCells={conflictCells}
           setConflictCells={setConflictCells}
           setResetConflictCells={setResetConflictCells}
+          highlightedCells={highlightedCells}
+          setHighlightedCells={setHighlightedCells}
         />
         <NumberButtons onNumberClick={handleNumberClick} />
         <UtilsButtons

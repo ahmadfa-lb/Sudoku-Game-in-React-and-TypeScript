@@ -12,6 +12,7 @@ import {
   faBrain,
   faLightbulb,
   faEraser,
+faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface UtilsButtonsProps {
@@ -49,6 +50,24 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   setHintCount,
   clearBoard,
 }) => {
+
+
+const [isClearMode, setIsClearMode] = useState(true); // Tracks toggle state
+
+const toggleClearSubmit = () => {
+  if (!isClearMode) {
+    // If in "Submit" mode, just toggle back to "Clear Board"
+    setIsClearMode(true);
+      // setHasCleared(true);
+    return;
+  }
+
+  // If in "Clear Board" mode, perform the clear board action
+  clearBoard();
+    setHasCleared(true);
+  setIsClearMode(false);
+};
+
   // const undoLastAction = () => {
   //   if (gridHistory.length > 0) {
   //     const lastGridState = gridHistory[gridHistory.length - 1];
@@ -219,10 +238,10 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     }
   };
 
-  const handleClearBoard = () => {
-    clearBoard();
-    setHasCleared(true);
-  };
+  // const handleClearBoard = () => {
+  //   clearBoard();
+  
+  // };
 
   return (
     <>
@@ -266,10 +285,10 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
-        <button onClick={handleClearBoard} className={"clear-board-btn"}>
-          <FontAwesomeIcon icon={faEraser} />
-          <b>Clear Board</b>
-        </button>
+ <button onClick={toggleClearSubmit} className={"clear-board-btn"}>
+          <FontAwesomeIcon icon={isClearMode ? faEraser : faPaperPlane} />
+          <b>{isClearMode ? "Clear Board" : "Submit"}</b>
+        </button> 
         <ToastContainer />
       </div>
     </>
@@ -277,3 +296,4 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
 };
 
 export default UtilsButtons;
+

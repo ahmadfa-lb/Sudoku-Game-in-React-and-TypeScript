@@ -1,7 +1,6 @@
-
-import React, { useEffect } from 'react';
-import './SudokuGrid.css';
-import { isValidSudoku } from '../../TypeScript/validation';
+import React, { useEffect, useState } from "react";
+import "./SudokuGrid.css";
+import { isValidSudoku } from "../../TypeScript/validation";
 
 interface SudokuGridProps {
   focusedCell: { row: number; col: number } | null;
@@ -15,9 +14,13 @@ interface SudokuGridProps {
   setSelectedNumber: React.Dispatch<React.SetStateAction<string>>;
   setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setResetConflictCells: React.Dispatch<React.SetStateAction<() => void>>;
-  conflictCells: { row: number; col: number; color: 'conflict' | 'valid' }[];
-  setConflictCells: React.Dispatch<React.SetStateAction<{ row: number; col: number; color: 'conflict' | 'valid' }[]>>;
   cellRefs: React.RefObject<(HTMLInputElement | null)[][]>;
+  highlightedCells: { row: number; col: number; color: "focused" | "conflict" }[];
+  setHighlightedCells: React.Dispatch<
+    React.SetStateAction<
+      { row: number; col: number; color: "focused" | "conflict" }[]
+    >
+  >;
 }
 
 const SudokuGrid: React.FC<SudokuGridProps> = ({
@@ -30,95 +33,57 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   setMistakes,
   maxMistakes,
   setGameOver,
-  conflictCells,
-  setConflictCells,
   setResetConflictCells,
   cellRefs,
+  highlightedCells,
+  setHighlightedCells,
 }) => {
-  // const [conflictCells, setConflictCells] = useState<{ row: number; col: number }[]>([]);
-  //const [mistakenNumber, setMistakenNumber] = useState<string | null>(null); // Track mistaken number
+  // const [highlightedCells, setHighlightedCells] = useState<
+  //   { row: number; col: number; color: "focused" | "conflict" }[]
+  // >([]);
+
+  const [enteredCellStatus, setEnteredCellStatus] = useState<{
+    row: number;
+    col: number;
+    status: "valid" | "invalid";
+  } | null>(null);
+
+  const [enteredCells, setEnteredCells] = React.useState<
+    { row: number; col: number; status: "valid" | "invalid" }[]
+  >([]);
 
   useEffect(() => {
-    setResetConflictCells(() => () => setConflictCells([]));
+    setResetConflictCells(() => () => setHighlightedCells([]));
   }, [setResetConflictCells]);
-
-  // useEffect(() => {
-  //   // Ensure refs array exists for each row
-  //   if (cellRefs.current.length === 0) {
-  //     cellRefs.current = Array.from({ length: 9 }, () =>
-  //       Array.from({ length: 9 }, () => null)
-  //     );
-  //   }
-  // }, [cellRefs]);
-
-
-  // useEffect(() => {
-  //   if (focusedCell && selectedNumber) {
-  //     const { row, col } = focusedCell;
-  
-  //     // Temporarily update the grid with the new number
-  //     const newGrid = grid.map((r, i) =>
-  //       r.map((cell, j) => (i === row && j === col ? selectedNumber : cell))
-  //     );
-  
-  //     // Check if the specific cell entry is valid
-  //     if (isValidSudoku(newGrid, row, col)) {
-  //       setGrid(newGrid);
-  //       setSelectedNumber('');
-  //       setMistakenNumber(null);
-  
-  //       // Add a "valid" entry in conflictCells for styling in blue
-  //       setConflictCells((prev) => [
-  //         ...prev.filter(c => !(c.row === row && c.col === col)), // Remove any previous conflicts at this cell
-  //         { row, col, color: 'valid' }  // Add the new valid entry
-  //       ]);
-  
-  //     } else {
-  //       setGrid(newGrid);
-  //       setSelectedNumber('');
-  //       setMistakenNumber(selectedNumber);
-  
-  //       setConflictCells((prev) => [
-  //         ...prev.filter(c => !(c.row === row && c.col === col)),
-  //         { row, col, color: 'conflict' } 
-  //       ]);
-  
-  //       setMistakes((prev) => {
-  //         const newMistakeCount = prev + 1;
-  //         if (newMistakeCount >= maxMistakes) {
-  //           setGameOver(true);
-  //         }
-  //         return newMistakeCount;
-  //       });
-  //     }
-  //   }
-  // }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes, setGameOver]);
-  
 
   useEffect(() => {
     if (focusedCell && selectedNumber) {
       const { row, col } = focusedCell;
-    
+
       // Temporarily update the grid with the new number
       const newGrid = grid.map((r, i) =>
         r.map((cell, j) => (i === row && j === col ? selectedNumber : cell))
       );
-    
-      // Check if the specific cell entry is valid
-      if (isValidSudoku(newGrid, row, col)) {
+
+      // Check validity of the entered number
+      const isValid = isValidSudoku(newGrid, row, col);
+
+      if (isValid) {
+        setEnteredCellStatus({ row, col, status: "valid" });
         setGrid(newGrid);
-        setSelectedNumber('');
-        setConflictCells((prev) => [
-          ...prev.filter(c => !(c.row === row && c.col === col)),
-          { row, col, color: 'valid' }  // Add the new valid entry
+        setEnteredCells((prev) => [
+          ...prev.filter((c) => !(c.row === row && c.col === col)),
+          { row, col, status: "valid" },
         ]);
       } else {
+        setEnteredCellStatus({ row, col, status: "invalid" });
         setGrid(newGrid);
-        setSelectedNumber('');
-        setConflictCells((prev) => [
-          ...prev.filter(c => !(c.row === row && c.col === col)),
-          { row, col, color: 'conflict' }
+        setSelectedNumber("");
+        setEnteredCells((prev) => [
+          ...prev.filter((c) => !(c.row === row && c.col === col)),
+          { row, col, status: "invalid" },
         ]);
+
         setMistakes((prev) => {
           const newMistakeCount = prev + 1;
           if (newMistakeCount >= maxMistakes) {
@@ -127,13 +92,70 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
           return newMistakeCount;
         });
       }
-    }
-  }, [selectedNumber, focusedCell, grid, setGrid, setSelectedNumber, setMistakes, maxMistakes, setGameOver, setConflictCells]);
-  
 
+      // Highlight cells with the same value
+      const relatedCells: {
+        row: number;
+        col: number;
+        color: "focused" | "conflict";
+      }[] = [];
+      newGrid.forEach((r, i) => {
+        r.forEach((cell, j) => {
+          if (cell === selectedNumber) {
+            // Check if this cell is conflicting with the focusedCell
+            const inSameRow = i === row;
+            const inSameCol = j === col;
+            const inSameSubgrid =
+              Math.floor(i / 3) === Math.floor(row / 3) &&
+              Math.floor(j / 3) === Math.floor(col / 3);
+
+            const isConflict = inSameRow || inSameCol || inSameSubgrid;
+
+            relatedCells.push({
+              row: i,
+              col: j,
+              color: isConflict ? "conflict" : "focused",
+            });
+          }
+        });
+      });
+
+      setHighlightedCells(relatedCells);
+      setSelectedNumber("");
+    }
+  }, [focusedCell, selectedNumber, grid, setGrid, setMistakes, setGameOver]);
 
   const handleCellClick = (row: number, col: number) => {
     setFocusedCell({ row, col });
+    const clickedValue = grid[row][col];
+
+    if (!clickedValue) {
+      setHighlightedCells([]);
+      return;
+    }
+
+    const relatedCells: {
+      row: number;
+      col: number;
+      color: "focused" | "conflict";
+    }[] = [];
+    grid.forEach((r, i) => {
+      r.forEach((cell, j) => {
+        if (cell === clickedValue) {
+          const tempGrid = grid.map((r2, i2) =>
+            r2.map((cell2, j2) => (i2 === i && j2 === j ? "" : cell2))
+          );
+          const isConflict = !isValidSudoku(tempGrid, i, j);
+          relatedCells.push({
+            row: i,
+            col: j,
+            color: isConflict ? "conflict" : "focused",
+          });
+        }
+      });
+    });
+
+    setHighlightedCells(relatedCells);
   };
 
   const isHighlighted = (row: number, col: number) => {
@@ -147,72 +169,58 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
     return inSameRow || inSameCol || inSameSubgrid;
   };
 
+  return (
+    <div className="sudoku-container">
+      {grid.map((row, i) =>
+        row.map((cell, j) => {
+          const highlight = highlightedCells.find(
+            (c) => c.row === i && c.col === j
+          );
+          const isFocusedCell =
+            enteredCellStatus?.row === i && enteredCellStatus?.col === j;
 
-// return (
-//   <div className="sudoku-container">
-//     {grid.map((row, i) =>
-//       row.map((cell, j) => {
-//         const conflict = conflictCells.find(c => c.row === i && c.col === j);
-//         const cellClass = conflict
-//           ? conflict.color === 'conflict' ? 'conflict' : 'valid'
-//           : '';
+          const cellClass = isFocusedCell
+            ? enteredCellStatus.status
+            : highlight?.color || "";
 
-//         return (
-//           <input
-//             key={`${i}-${j}`}
-//             value={cell}
-//             onClick={() => handleCellClick(i, j)}
-//             readOnly
-//             className={`sudoku-cell ${cellClass} 
-//               ${focusedCell?.row === i && focusedCell?.col === j ? 'focused' : ''}
-//               ${isHighlighted(i, j) ? 'highlighted' : ''}
-//               ${i % 3 === 0 ? 'border-top' : ''}
-//               ${j % 3 === 0 ? 'border-left' : ''}
-//               ${j === 8 ? 'border-right' : ''}
-//               ${i === 8 ? 'border-bottom' : ''}`}
-//           />
-//         );
-//       })
-//     )}
-//   </div>
-// );
+          const enteredCell = enteredCells.find(
+            (c) => c.row === i && c.col === j
+          );
 
-return (
-  <div className="sudoku-container">
-    {grid.map((row, i) =>
-      row.map((cell, j) => {
-        const conflict = conflictCells.find(c => c.row === i && c.col === j);
-        const cellClass = conflict
-          ? conflict.color === 'conflict' ? 'conflict' : 'valid'
-          : '';
+          const highlighted = highlightedCells.find(
+            (c) => c.row === i && c.col === j
+          );
+          const cellClass1 = enteredCell
+            ? enteredCell.status
+            : highlighted?.color || "";
 
-        return (
-          <input
-            title='🤔'
-            key={`${i}-${j}`}
-            ref={(el) => {
-              if (cellRefs.current) {
-                cellRefs.current[i][j] = el;
-              }
-            }}
-            value={cell}
-            onClick={() => handleCellClick(i, j)}
-            readOnly
-            className={`sudoku-cell ${cellClass} 
-              ${focusedCell?.row === i && focusedCell?.col === j ? 'focused' : ''}
-              ${isHighlighted(i, j) ? 'highlighted' : ''}
-              ${i % 3 === 0 ? 'border-top' : ''}
-              ${j % 3 === 0 ? 'border-left' : ''}
-              ${j === 8 ? 'border-right' : ''}
-              ${i === 8 ? 'border-bottom' : ''}`}
-          />
-        );
-      })
-    )}
-  </div>
-);
+          const isFocused = focusedCell?.row === i && focusedCell?.col === j;
 
-
+          return (
+            <input
+              title="🤔🧩🔢"
+              key={`${i}-${j}`}
+              ref={(el) => {
+                if (cellRefs.current) {
+                  cellRefs.current[i][j] = el;
+                }
+              }}
+              value={cell}
+              onClick={() => handleCellClick(i, j)}
+              readOnly
+              className={`sudoku-cell ${cellClass}  ${cellClass1}
+                ${isHighlighted(i, j) ? "highlighted" : ""}
+                ${i % 3 === 0 ? "border-top" : ""}
+                ${j % 3 === 0 ? "border-left" : ""}
+                ${j === 8 ? "border-right" : ""}
+                ${i === 8 ? "border-bottom" : ""}
+                ${isFocused ? "focused" : ""}`}
+            />
+          );
+        })
+      )}
+    </div>
+  );
 };
 
 export default SudokuGrid;

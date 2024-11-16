@@ -12,7 +12,7 @@
   width: 40px;
   height: 40px;
   text-align: center;
-  border: .1px solid #ddd;
+  border: 0.1px solid #ddd;
   /* outline: 1px solid #333; */
   background-color: #f9f7f7;
   font-size: 1.5rem;
@@ -23,24 +23,20 @@
   color: blue;
 }
 
-.sudoku-cell.conflict {
+.sudoku-cell.invalid {
   color: red;
 }
 
 .sudoku-cell.highlighted {
-  background-color: #C2D9FF;
+  background-color: #c2d9ff;
 }
-
-/* .sudoku-cell.mistake-number {
-  background-color: #3f72af;
-} */
 
 .sudoku-cell.conflict {
   background-color: #f58282;
 }
 
 .sudoku-cell.focused {
-  background-color: #4C3BCF;
+  background-color: #4c3bcf;
 }
 
 .sudoku-cell.border-top {
