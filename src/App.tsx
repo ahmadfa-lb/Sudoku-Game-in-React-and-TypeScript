@@ -45,6 +45,15 @@ const App: React.FC = () => {
   const [difficulty, setDifficulty] = useState<string>("easy");
   const [hintCount, setHintCount] = useState(3);
   const [hasCleared, setHasCleared] = useState(false);
+  const [enteredCells, setEnteredCells] = React.useState<
+  { row: number; col: number; status: "valid" | "invalid" }[]
+>([]);
+
+const [enteredCellStatus, setEnteredCellStatus] = useState<{
+  row: number;
+  col: number;
+  status: "valid" | "invalid";
+} | null>(null);
 
   useEffect(() => {
     const newPuzzle = generatePuzzle(difficulty);
@@ -71,6 +80,8 @@ const App: React.FC = () => {
     setGameResult(null);
     resetConflictCells();
     setHintCount(3);
+    setEnteredCells([]);
+    setHighlightedCells([]);
   };
 
   const difficulties = [
@@ -117,7 +128,7 @@ const App: React.FC = () => {
   return (
     <>
       {isGameOver && (
-        <BoxResult resetGame={resetGame} gameResult={gameResult!} currentDifficulty={difficulty}  />
+        <BoxResult resetGame={resetGame} gameResult={gameResult!} setEnteredCellStatus={setEnteredCellStatus} setFocusedCell={setFocusedCell} setEnteredCells={setEnteredCells}   />
       )}
       <div className="game-container">
         <div className="header">
@@ -149,11 +160,13 @@ const App: React.FC = () => {
           setMistakes={setMistakes}
           maxMistakes={maxMistakes}
           setGameOver={setIsGameOver}
-          conflictCells={conflictCells}
-          setConflictCells={setConflictCells}
           setResetConflictCells={setResetConflictCells}
           highlightedCells={highlightedCells}
           setHighlightedCells={setHighlightedCells}
+          enteredCells={enteredCells}
+          setEnteredCells={setEnteredCells}
+          enteredCellStatus={enteredCellStatus}
+          setEnteredCellStatus={setEnteredCellStatus}
         />
         <NumberButtons onNumberClick={handleNumberClick} />
         <UtilsButtons

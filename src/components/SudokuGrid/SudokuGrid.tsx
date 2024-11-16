@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./SudokuGrid.css";
 import { isValidSudoku } from "../../TypeScript/validation";
 
@@ -21,6 +21,26 @@ interface SudokuGridProps {
       { row: number; col: number; color: "focused" | "conflict" }[]
     >
   >;
+  enteredCells: {
+    row: number;
+    col: number;
+    status: "valid" | "invalid";
+}[];
+setEnteredCells: React.Dispatch<React.SetStateAction<{
+  row: number;
+  col: number;
+  status: "valid" | "invalid";
+}[]>>;
+enteredCellStatus: {
+  row: number;
+  col: number;
+  status: "valid" | "invalid";
+} | null;
+setEnteredCellStatus: React.Dispatch<React.SetStateAction<{
+  row: number;
+  col: number;
+  status: "valid" | "invalid";
+} | null>>;
 }
 
 const SudokuGrid: React.FC<SudokuGridProps> = ({
@@ -37,20 +57,11 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
   cellRefs,
   highlightedCells,
   setHighlightedCells,
+  enteredCells,
+  setEnteredCells,
+  enteredCellStatus,
+  setEnteredCellStatus,
 }) => {
-  // const [highlightedCells, setHighlightedCells] = useState<
-  //   { row: number; col: number; color: "focused" | "conflict" }[]
-  // >([]);
-
-  const [enteredCellStatus, setEnteredCellStatus] = useState<{
-    row: number;
-    col: number;
-    status: "valid" | "invalid";
-  } | null>(null);
-
-  const [enteredCells, setEnteredCells] = React.useState<
-    { row: number; col: number; status: "valid" | "invalid" }[]
-  >([]);
 
   useEffect(() => {
     setResetConflictCells(() => () => setHighlightedCells([]));

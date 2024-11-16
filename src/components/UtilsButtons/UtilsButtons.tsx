@@ -12,7 +12,7 @@ import {
   faBrain,
   faLightbulb,
   faEraser,
-faPaperPlane,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface UtilsButtonsProps {
@@ -54,45 +54,18 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   hasCleared,
   setHasCleared,
 }) => {
+  const [isClearMode, setIsClearMode] = useState(true); // Tracks toggle state
 
+  const toggleClearSubmit = () => {
+    if (!isClearMode) {
+      setIsClearMode(true);
+      return;
+    }
 
-const [isClearMode, setIsClearMode] = useState(true); // Tracks toggle state
-
-const toggleClearSubmit = () => {
-  if (!isClearMode) {
-    // If in "Submit" mode, just toggle back to "Clear Board"
-    setIsClearMode(true);
-      // setHasCleared(true);
-    return;
-  }
-
-  // If in "Clear Board" mode, perform the clear board action
-  clearBoard();
+    clearBoard();
     setHasCleared(true);
-  setIsClearMode(false);
-};
-
-  // const undoLastAction = () => {
-  //   if (gridHistory.length > 0) {
-  //     const lastGridState = gridHistory[gridHistory.length - 1];
-  //     setGrid(lastGridState);
-  //     setGridHistory(gridHistory.slice(0, -1));
-
-  //     const lastConflictCell = conflictCells[conflictCells.length - 1];
-
-  //     if (lastConflictCell) {
-  //       const cellElement =
-  //         cellRefs.current[lastConflictCell.row][lastConflictCell.col];
-  //       if (cellElement) {
-  //         cellElement.classList.remove("highlighted");
-  //       }
-
-  //       setConflictCells(conflictCells.slice(0, -1));
-  //     }
-  //   }
-  // };
-
-  const [isHovered, setIsHovered] = useState(false);
+    setIsClearMode(false);
+  };
 
   const undoLastAction = () => {
     if (gridHistory.length > 0) {
@@ -242,11 +215,6 @@ const toggleClearSubmit = () => {
     }
   };
 
-  // const handleClearBoard = () => {
-  //   clearBoard();
-  
-  // };
-
   return (
     <>
       <div className="btns-div">
@@ -258,15 +226,6 @@ const toggleClearSubmit = () => {
           <FontAwesomeIcon icon={faCheck} />
           <b>Check Solution</b>
         </button>
-        {/* <button onClick={handleSolve} className="solve-btn" disabled={!hasCleared} onMouseEnter={setIsHoveredin}
-        onMouseLeave={() => setIsHoveredout()}>
-          <FontAwesomeIcon icon={faBrain} />
-          <b>Solve</b>
-          <b className="tooltip">
-            you should manually enter a board to solve it!
-          </b>
-        </button> */}
-
         <button
           onClick={handleSolve}
           className="solve-btn"
@@ -274,7 +233,7 @@ const toggleClearSubmit = () => {
         >
           <FontAwesomeIcon icon={faBrain} />
           <b>Solve</b>
-          {!hasCleared && !isHovered && (
+          {!hasCleared && (
             <span className="tooltip">
               You should manually enter a board to solve it!
             </span>
@@ -289,10 +248,10 @@ const toggleClearSubmit = () => {
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
- <button onClick={toggleClearSubmit} className={"clear-board-btn"}>
+        <button onClick={toggleClearSubmit} className={"clear-board-btn"}>
           <FontAwesomeIcon icon={isClearMode ? faEraser : faPaperPlane} />
           <b>{isClearMode ? "Clear Board" : "Submit"}</b>
-        </button> 
+        </button>
         <ToastContainer />
       </div>
     </>
@@ -300,4 +259,3 @@ const toggleClearSubmit = () => {
 };
 
 export default UtilsButtons;
-
