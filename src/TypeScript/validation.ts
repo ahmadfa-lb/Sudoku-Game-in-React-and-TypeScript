@@ -1,19 +1,19 @@
 export const isValidBoard = (grid: string[][]): boolean => {
   const isUniqueAndFilled = (arr: string[]) => {
-    // Fail if there are any empty cells
+    
     if (arr.includes('')) return false;
-    // Check if all numbers are unique
+    
     return new Set(arr).size === arr.length;
   };
 
-  // Check rows and columns
+  
   for (let i = 0; i < 9; i++) {
     const row = grid[i];
     const col = grid.map(row => row[i]);
     if (!isUniqueAndFilled(row) || !isUniqueAndFilled(col)) return false;
   }
 
-  // Check 3x3 subgrids
+  
   for (let boxRow = 0; boxRow < 9; boxRow += 3) {
     for (let boxCol = 0; boxCol < 9; boxCol += 3) {
       const subgrid = [];

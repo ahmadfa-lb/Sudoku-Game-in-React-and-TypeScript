@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import SudokuGrid from "./components/SudokuGrid";
-import NumberButtons from "./components/NumbersBtns";
-import BoxResult from "./components/BoxResult";
+import SudokuGrid from "./components/SudokuGrid/SudokuGrid";
+import NumberButtons from "./components/NumbersBtns/NumbersBtns";
+import BoxResult from "./components/BoxResult/BoxResult";
 import UtilsButtons from "./components/UtilsButtons/UtilsButtons";
-import DifficultySelector from "./components/DifficultySelector";
-import { generatePuzzle } from "./puzzleGenerator";
-// import { solveBoard } from "./solveBoard";
+import DifficultySelector from "./components/DifficultySelector/DifficultySelector";
+import { generatePuzzle } from "./TypeScript/puzzleGenerator";
 import SudokuImg from "./assets/sudoku_img.png";
 
 import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { isValidBoard } from "./validation";
-// import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 library.add(fas, fab);
@@ -36,7 +32,7 @@ const App: React.FC = () => {
   const [resetConflictCells, setResetConflictCells] = useState<() => void>(
     () => {}
   );
-  // const [difficulty] = useState<string>("easy");
+
   const [conflictCells, setConflictCells] = useState<{ row: number; col: number; color: 'conflict' | 'valid' }[]>([]);
 
   const cellRefs = useRef<(HTMLInputElement | null)[][]>(

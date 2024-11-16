@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./UtilsButtons.css";
-import { isValidBoard } from "../../validation";
-import { solveBoard } from "../../solveBoard";
+import { isValidBoard } from "../../TypeScript/validation";
+import { solveBoard } from "../../TypeScript/solveBoard";
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './BoxResult.css';
-import lostGif from '../assets/lost.gif';
-import victoryGif from '../assets/victory.gif';
+import lostGif from '../../assets/lost.gif';
+import victoryGif from '../../assets/victory.gif';
 
 interface BoxResultProps {
   resetGame: () => void;

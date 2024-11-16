@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import './SudokuGrid.css';
-import { isValidSudoku } from '../validation';
+import { isValidSudoku } from '../../TypeScript/validation';
 
 interface SudokuGridProps {
   focusedCell: { row: number; col: number } | null;
