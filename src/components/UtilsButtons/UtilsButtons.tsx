@@ -33,6 +33,8 @@ interface UtilsButtonsProps {
   setHintCount: React.Dispatch<React.SetStateAction<number>>;
   clearBoard: () => void;
   setTimer: React.Dispatch<React.SetStateAction<number>>;
+  hasCleared: boolean;
+  setHasCleared: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UtilsButtons: React.FC<UtilsButtonsProps> = ({
@@ -49,6 +51,8 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   hintCount,
   setHintCount,
   clearBoard,
+  hasCleared,
+  setHasCleared,
 }) => {
 
 
@@ -87,7 +91,7 @@ const toggleClearSubmit = () => {
   //     }
   //   }
   // };
-  const [hasCleared, setHasCleared] = useState(false);
+
   const [isHovered, setIsHovered] = useState(false);
 
   const undoLastAction = () => {

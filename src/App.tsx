@@ -44,6 +44,7 @@ const App: React.FC = () => {
   const [timer, setTimer] = useState(0);
   const [difficulty, setDifficulty] = useState<string>("easy");
   const [hintCount, setHintCount] = useState(3);
+  const [hasCleared, setHasCleared] = useState(false);
 
   useEffect(() => {
     const newPuzzle = generatePuzzle(difficulty);
@@ -84,6 +85,7 @@ const App: React.FC = () => {
     }
     setDifficulty(newDifficulty);
     resetGame(newDifficulty);
+    setHasCleared(false);
   };
 
   const clearBoard = () => {
@@ -168,6 +170,8 @@ const App: React.FC = () => {
           setHintCount={setHintCount}
           clearBoard={clearBoard}
           setTimer={setTimer}
+          hasCleared={hasCleared}
+          setHasCleared={setHasCleared}
         />
       </div>
     </>
