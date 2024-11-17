@@ -72,6 +72,7 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
   };
 
   const resetGame = (difficulty: string = "easy") => {
+    setGridHistory([]);
     setGrid(generatePuzzle(difficulty));
     setFocusedCell(null);
     setSelectedNumber("");
@@ -82,6 +83,7 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
     setHintCount(3);
     setEnteredCells([]);
     setHighlightedCells([]);
+    setEnteredCellStatus(null);
   };
 
   const difficulties = [
@@ -128,7 +130,7 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
   return (
     <>
       {isGameOver && (
-        <BoxResult resetGame={resetGame} gameResult={gameResult!} setEnteredCellStatus={setEnteredCellStatus} setFocusedCell={setFocusedCell} setEnteredCells={setEnteredCells}   />
+        <BoxResult resetGame={resetGame} gameResult={gameResult!} />
       )}
       <div className="game-container">
         <div className="header">
@@ -185,6 +187,7 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
           setTimer={setTimer}
           hasCleared={hasCleared}
           setHasCleared={setHasCleared}
+          setHighlightedCells={setHighlightedCells}
         />
       </div>
     </>

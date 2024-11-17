@@ -17,10 +17,11 @@
   background-color: #f9f7f7;
   font-size: 1.5rem;
   cursor: pointer;
+  caret-color: transparent;
 }
 
 .sudoku-cell.valid {
-  color: blue;
+  color: rgb(4, 255, 4);
 }
 
 .sudoku-cell.invalid {

@@ -31,6 +31,7 @@
     margin-left: -22.5rem;   */
 }
 
+
 .btns-div .undo-btn:hover,
 .btns-div .check-solution-btn:hover,
 .btns-div .solve-btn:hover,
@@ -116,8 +117,8 @@
   border-color: #4C3BCF transparent transparent transparent;
 }
 
-
-.solve-btn[disabled] {
+.btns-div .solve-btn[disabled] {
   cursor: not-allowed;
   opacity: 0.6;
+  animation: none;
 }

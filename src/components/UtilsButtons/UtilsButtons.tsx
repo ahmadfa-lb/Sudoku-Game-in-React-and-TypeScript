@@ -35,6 +35,11 @@ interface UtilsButtonsProps {
   setTimer: React.Dispatch<React.SetStateAction<number>>;
   hasCleared: boolean;
   setHasCleared: React.Dispatch<React.SetStateAction<boolean>>;
+  setHighlightedCells: React.Dispatch<React.SetStateAction<{
+    row: number;
+    col: number;
+    color: "focused" | "conflict";
+}[]>>
 }
 
 const UtilsButtons: React.FC<UtilsButtonsProps> = ({
@@ -53,6 +58,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   clearBoard,
   hasCleared,
   setHasCleared,
+  setHighlightedCells,
 }) => {
   const [isClearMode, setIsClearMode] = useState(true); // Tracks toggle state
 
@@ -84,6 +90,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
 
         setConflictCells(conflictCells.slice(0, -1));
       }
+      setHighlightedCells([]);
     }
   };
 

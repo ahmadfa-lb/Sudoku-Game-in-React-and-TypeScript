@@ -6,30 +6,12 @@ import victoryGif from '../../assets/victory.gif';
 interface BoxResultProps {
   resetGame: () => void;
   gameResult: 'win' | 'lose';
-  
-setEnteredCells: React.Dispatch<React.SetStateAction<{
-  row: number;
-  col: number;
-  status: "valid" | "invalid";
-}[]>>;
-setEnteredCellStatus: React.Dispatch<React.SetStateAction<{
-  row: number;
-  col: number;
-  status: "valid" | "invalid";
-} | null>>;
-setFocusedCell: (cell: {
-  row: number;
-  col: number;
-} | null) => void
 }
 
-const BoxResult: React.FC<BoxResultProps> = ({ resetGame, gameResult, setEnteredCells, setFocusedCell, setEnteredCellStatus }) => {
+const BoxResult: React.FC<BoxResultProps> = ({ resetGame, gameResult }) => {
 
   const handlePlayAgain = () => {
-    setFocusedCell(null);
     resetGame();
-    setEnteredCells([]);
-    setEnteredCellStatus(null);
   };
 
   return (
