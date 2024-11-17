@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./UtilsButtons.css";
@@ -60,17 +60,11 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   setHasCleared,
   setHighlightedCells,
 }) => {
-  const [isClearMode, setIsClearMode] = useState(true); // Tracks toggle state
 
-  const toggleClearSubmit = () => {
-    if (!isClearMode) {
-      setIsClearMode(true);
-      return;
-    }
+  const toggleClearBtn = () => {
 
     clearBoard();
     setHasCleared(true);
-    setIsClearMode(false);
   };
 
   const undoLastAction = () => {
@@ -255,9 +249,9 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
-        <button onClick={toggleClearSubmit} className={"clear-board-btn"}>
-          <FontAwesomeIcon icon={isClearMode ? faEraser : faPaperPlane} />
-          <b>{isClearMode ? "Clear Board" : "Submit"}</b>
+        <button onClick={toggleClearBtn} className={"clear-board-btn"}>
+          <FontAwesomeIcon icon={faEraser} />
+          <b>Clear Board</b>
         </button>
         <ToastContainer />
       </div>
