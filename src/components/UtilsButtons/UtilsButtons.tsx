@@ -61,8 +61,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   setHighlightedCells,
 }) => {
 
-  const toggleClearBtn = () => {
-
+  const handleClearBtn = () => {
     clearBoard();
     setHasCleared(true);
   };
@@ -262,7 +261,7 @@ const handleHint = () => {
           <b>Hint</b>
           <b className="hints-nbrs">{hintCount}</b>
         </button>
-        <button onClick={toggleClearBtn} className={"clear-board-btn"}>
+        <button onClick={handleClearBtn} className={"clear-board-btn"}>
           <FontAwesomeIcon icon={faEraser} />
           <b>Clear Board</b>
         </button>

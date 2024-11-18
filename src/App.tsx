@@ -116,7 +116,16 @@ useEffect(() => {
   };
 
   const clearBoard = () => {
-    setGrid(Array.from({ length: 9 }, () => Array(9).fill("")));
+    const empty = "empty";
+    const newBoard: Cell[][] = Array.from({ length: 9 }, () =>
+      Array.from({ length: 9 }, () => ({
+        value: "",
+        readOnly: false,
+        status: empty,
+      }))
+    );
+    
+    setGrid(newBoard);
     setGridHistory([]);
     setFocusedCell(null);
     setSelectedNumber("");

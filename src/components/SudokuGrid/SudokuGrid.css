@@ -40,6 +40,10 @@
   background-color: #4c3bcf;
 }
 
+.sudoku-cell.focused:focus{
+  transition: 0.5s;
+}
+
 .sudoku-cell.border-top {
   border-top: 2px solid #000;
 }
