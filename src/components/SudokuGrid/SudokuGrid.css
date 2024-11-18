@@ -81,8 +81,8 @@
 
 @media (max-width: 390px){
   .sudoku-cell {
-    width: 33px;
-    height: 33px;
+    width: 28px;
+    height: 28px;
     font-size: 1.3rem;
   }
 }
