@@ -84,7 +84,7 @@ useEffect(() => {
   };
 
   const resetGame = (difficulty: string = "easy") => {
-    const newPuzzle = generatePuzzle(difficulty); // `Cell[][]`
+    const newPuzzle = generatePuzzle(difficulty);
     setGrid(newPuzzle); 
     setGridHistory([]);
     setFocusedCell(null);
@@ -215,6 +215,7 @@ useEffect(() => {
           hasCleared={hasCleared}
           setHasCleared={setHasCleared}
           setHighlightedCells={setHighlightedCells}
+          resetGame={resetGame}
         />
       </div>
     </>

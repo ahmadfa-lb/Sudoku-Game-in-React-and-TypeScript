@@ -12,6 +12,7 @@ import {
   faBrain,
   faLightbulb,
   faEraser,
+  faGamepad,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Cell } from "../../App"; 
@@ -39,7 +40,8 @@ interface UtilsButtonsProps {
     row: number;
     col: number;
     color: "focused" | "conflict";
-}[]>>
+}[]>>;
+resetGame: () => void;
 }
 
 const UtilsButtons: React.FC<UtilsButtonsProps> = ({
@@ -59,6 +61,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   hasCleared,
   setHasCleared,
   setHighlightedCells,
+  resetGame,
 }) => {
 
   const handleClearBtn = () => {
@@ -227,6 +230,10 @@ const handleHint = () => {
   }
 };
 
+const handleNewGameBtn = () => {
+  resetGame();
+};
+
 
   return (
     <>
@@ -264,6 +271,10 @@ const handleHint = () => {
         <button onClick={handleClearBtn} className={"clear-board-btn"}>
           <FontAwesomeIcon icon={faEraser} />
           <b>Clear Board</b>
+        </button>
+        <button onClick={handleNewGameBtn} className="new-game-btn">
+          <FontAwesomeIcon icon={faGamepad} />
+          <b>New Game</b>
         </button>
         <ToastContainer />
       </div>

@@ -11,7 +11,8 @@
 .btns-div .check-solution-btn,
 .btns-div .solve-btn,
 .btns-div .hint-btn,
-.btns-div .clear-board-btn {
+.btns-div .clear-board-btn,
+.btns-div .new-game-btn {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -36,16 +37,19 @@
 .btns-div .check-solution-btn:hover,
 .btns-div .solve-btn:hover,
 .btns-div .hint-btn:hover,
-.btns-div .clear-board-btn:hover {
+.btns-div .clear-board-btn:hover,
+.btns-div .new-game-btn:hover {
   color: #f9f7f7;
   background-color: #4C3BCF;
+  transition: .3s;
 }
 
 .btns-div .undo-btn:active,
 .btns-div .check-solution-btn:active,
 .btns-div .solve-btn:active,
 .btns-div .hint-btn:active,
-.btns-div .clear-board-btn:active {
+.btns-div .clear-board-btn:active,
+.btns-div .new-game-btn {
   animation: clickEffect 0.3s forwards;
 }
 
@@ -65,7 +69,8 @@
 .btns-div .check-solution-btn b,
 .btns-div .solve-btn b,
 .btns-div .hint-btn b,
-.btns-div .clear-board-btn b {
+.btns-div .clear-board-btn b,
+.btns-div .new-game-btn b {
   padding-top: 0.5rem;
   font-size: 0.7rem;
 }
@@ -123,7 +128,20 @@
   animation: none;
 }
 
+/* /////////////////////    media queries       ////////////////////////// */
 
+
+@media (max-width: 1024px){
+
+  .btns-div .undo-btn,
+  .btns-div .check-solution-btn,
+  .btns-div .solve-btn,
+  .btns-div .hint-btn,
+  .btns-div .clear-board-btn{
+    font-size: 2rem;
+  }
+
+}
 
 @media (max-width: 768px){
 
@@ -136,7 +154,7 @@
 .btns-div .solve-btn,
 .btns-div .hint-btn,
 .btns-div .clear-board-btn{
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .btns-div .undo-btn,
@@ -144,5 +162,20 @@
 .btns-div .solve-btn{
   width: 3rem;
 }
+
+.btns-div .clear-board-btn{
+  width: 6rem;
+}
+
+}
+
+
+@media (max-width: 390px){
+
+  .btns-div {
+    margin-top: 1rem;
+    padding-left: .5rem;
+    flex-wrap: wrap;
+  }
 
 }
