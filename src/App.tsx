@@ -16,8 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 library.add(fas, fab);
 
 export interface Cell {
-  value: string; // The number in the cell
-  readOnly: boolean; // Whether the cell is read-only
+  value: string;
+  readOnly: boolean;
   status: "valid" | "invalid" | "empty"; 
 }
 
@@ -69,7 +69,7 @@ const [userEditableCells, setUserEditableCells] = useState<{ row: number; col: n
 
 useEffect(() => {
   const newPuzzle = generatePuzzle(difficulty);
-  setGrid(newPuzzle); // Initialize with Cell structure
+  setGrid(newPuzzle);
 }, [difficulty]);
 
 
@@ -136,11 +136,11 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    setTimer(0); // Reset timer whenever difficulty changes
+    setTimer(0);
     const interval = setInterval(() => setTimer((prev) => prev + 1), 1000);
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [difficulty]); // Dependency array includes difficulty
+    return () => clearInterval(interval);
+  }, [difficulty]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);

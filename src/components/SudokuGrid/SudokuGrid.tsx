@@ -7,8 +7,8 @@ interface SudokuGridProps {
   focusedCell: { row: number; col: number } | null;
   setFocusedCell: (cell: { row: number; col: number } | null) => void;
   selectedNumber: string;
-  grid: Cell[][]; // Use Cell[][] instead of string[][]
-  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>; // Set grid as Cell[][]
+  grid: Cell[][];
+  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>;
   setMistakes: React.Dispatch<React.SetStateAction<number>>;
   mistakes: number;
   maxMistakes: number;
@@ -112,14 +112,13 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         return;
       }
 
-      // Ensure you're setting a Cell object with a value instead of just a string.
       const newGrid = grid.map((r, i) =>
         r.map((cell, j) =>
           i === row && j === col ? { ...cell, value: selectedNumber } : cell
         )
       );
 
-      const isValid = isValidSudoku(newGrid as Cell[][], row, col); // Cast grid to Cell[][] here
+      const isValid = isValidSudoku(newGrid as Cell[][], row, col);
 
       if (isValid) {
         setEnteredCellStatus({ row, col, status: "valid" });
@@ -153,7 +152,6 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
       newGrid.forEach((r, i) => {
         r.forEach((cell, j) => {
           if (cell.value === selectedNumber) {
-            // Make sure you're comparing `value`, not the entire Cell object.
             const inSameRow = i === row;
             const inSameCol = j === col;
             const inSameSubgrid =
@@ -189,13 +187,11 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
 
   const handleCellClick = (row: number, col: number) => {
     setHighlightedCells([]);
-    const clickedValue = grid[row][col].value; // Access the value of the cell
+    const clickedValue = grid[row][col].value;
 
-    // Allow focusing regardless of editability
     setFocusedCell({ row, col });
 
     if (isReadOnly(row, col)) {
-      // Highlight related cells and the column/row/subgrid for read-only cells
       if (clickedValue) {
         const relatedCells: {
           row: number;
@@ -206,15 +202,13 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         grid.forEach((r, i) => {
           r.forEach((cell, j) => {
             if (cell.value === clickedValue) {
-              // Ensure we're comparing the value of the cell
-              // Create a new tempGrid with Cell objects instead of strings
               const tempGrid = grid.map((r2, i2) =>
                 r2.map(
                   (cell2, j2) =>
-                    i2 === i && j2 === j ? { ...cell2, value: "" } : cell2 // Reset value, not replacing with string
+                    i2 === i && j2 === j ? { ...cell2, value: "" } : cell2
                 )
               );
-              const isConflict = !isValidSudoku(tempGrid as Cell[][], i, j); // Cast to Cell[][] as needed
+              const isConflict = !isValidSudoku(tempGrid as Cell[][], i, j);
               relatedCells.push({
                 row: i,
                 col: j,
@@ -225,10 +219,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         });
         setHighlightedCells(relatedCells);
       }
-      return; // Prevent editing on read-only cells
+      return;
     }
-
-    // Allow edits only for editable cells
     setFocusedCell({ row, col });
   };
 
@@ -238,12 +230,6 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
         row.map((cell, j) => {
           const isCellReadOnly = isReadOnly(i, j);
           const isFocused = focusedCell?.row === i && focusedCell?.col === j;
-          // const highlight = highlightedCells.find(
-          //   (c) => c.row === i && c.col === j
-          // );
-
-          // const cellClass = highlight?.color || "";
-          // ${cellClass}
 
           const enteredCell = enteredCells.find(
             (c) => c.row === i && c.col === j
@@ -277,8 +263,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
                 }
               }}
               value={cell.value}
-              onClick={() => handleCellClick(i, j)} // Focus and highlight logic
-              readOnly={isCellReadOnly} // Block edits for read-only cells
+              onClick={() => handleCellClick(i, j)}
+              readOnly={isCellReadOnly}
               className={`sudoku-cell ${cellClass1} ${cellClass2}
                 ${cell.status === "valid" ? "valid-cell" : ""} 
                 ${cell.status === "invalid" ? "invalid-cell" : ""} 

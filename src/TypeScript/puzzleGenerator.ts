@@ -43,8 +43,8 @@ const isSafe = (grid: string[][], row: number, col: number, num: string): boolea
   };
   
   export const generatePuzzle = (difficulty: string): Cell[][] => {
-    const grid = Array.from({ length: 9 }, () => Array(9).fill("")); // Initialize empty grid
-    solveSudokuRandomized(grid); // Generate a complete Sudoku solution
+    const grid = Array.from({ length: 9 }, () => Array(9).fill(""));
+    solveSudokuRandomized(grid);
   
     const cellsToClear =
       difficulty === "easy" ? 30 : difficulty === "medium" ? 40 : 50;
@@ -54,16 +54,15 @@ const isSafe = (grid: string[][], row: number, col: number, num: string): boolea
       const row = Math.floor(Math.random() * 9);
       const col = Math.floor(Math.random() * 9);
       if (grid[row][col] !== "") {
-        grid[row][col] = ""; // Clear a cell for the puzzle
+        grid[row][col] = "";
         clearedCells++;
       }
     }
-  
-    // Map the grid to a Cell structure
+
     return grid.map((row) =>
       row.map((value) => ({
-        value, // Cell value (either a number or empty)
-        readOnly: value !== "", // Pre-filled cells are read-only
+        value,
+        readOnly: value !== "",
         status: value = "empty"
       }))
     );

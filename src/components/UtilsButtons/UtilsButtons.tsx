@@ -123,9 +123,8 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   };
 
   const handleSolve = () => {
-    const solution = solveBoard([...grid].map((row) => [...row])); // Deep copy grid
+    const solution = solveBoard([...grid].map((row) => [...row]));
     if (solution) {
-      // Save current grid to history before displaying the solution
       setGridHistory((prevHistory) => [
         ...prevHistory,
         JSON.parse(JSON.stringify(grid)),
@@ -151,14 +150,12 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   };
 
 const handleHint = () => {
-  // Create a deep copy of the grid to preserve all the cells
   const gridCopy = grid.map((row) =>
-    row.map((cell) => ({ ...cell })) // Creating a deep copy of each cell
+    row.map((cell) => ({ ...cell }))
   );
 
   const solution = solveBoard(gridCopy);
 
-  // Check for conflicts before giving a hint
   const hasConflicts = conflictCells.length > 0 || !solution;
   if (hasConflicts) {
     toast.warn("Resolve conflicts first!", {

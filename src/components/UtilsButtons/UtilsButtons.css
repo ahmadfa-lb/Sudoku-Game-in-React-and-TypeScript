@@ -22,8 +22,8 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  color: #4C3BCF;
-  background-color: #C2D9FF;
+  color: #4c3bcf;
+  background-color: #c2d9ff;
   font-size: 1.5rem;
   padding: 0.5rem 0.5rem;
   transition: transform 0.3s ease;
@@ -32,7 +32,6 @@
     margin-left: -22.5rem;   */
 }
 
-
 .btns-div .undo-btn:hover,
 .btns-div .check-solution-btn:hover,
 .btns-div .solve-btn:hover,
@@ -40,8 +39,8 @@
 .btns-div .clear-board-btn:hover,
 .btns-div .new-game-btn:hover {
   color: #f9f7f7;
-  background-color: #4C3BCF;
-  transition: .3s;
+  background-color: #4c3bcf;
+  transition: 0.3s;
 }
 
 .btns-div .undo-btn:active,
@@ -87,13 +86,12 @@
   font-size: 1rem;
 }
 
-
 .tooltip {
   position: absolute;
   bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4C3BCF;
+  background-color: #4c3bcf;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -119,7 +117,7 @@
   transform: translateX(-50%);
   border-width: 5px;
   border-style: solid;
-  border-color: #4C3BCF transparent transparent transparent;
+  border-color: #4c3bcf transparent transparent transparent;
 }
 
 .btns-div .solve-btn[disabled] {
@@ -130,52 +128,44 @@
 
 /* /////////////////////    media queries       ////////////////////////// */
 
+@media (max-width: 1024px) {
+  .btns-div .undo-btn,
+  .btns-div .check-solution-btn,
+  .btns-div .solve-btn,
+  .btns-div .hint-btn,
+  .btns-div .clear-board-btn {
+    font-size: 2rem;
+  }
+}
 
-@media (max-width: 1024px){
+@media (max-width: 768px) {
+  .btns-div {
+    flex-wrap: wrap;
+  }
 
   .btns-div .undo-btn,
   .btns-div .check-solution-btn,
   .btns-div .solve-btn,
   .btns-div .hint-btn,
-  .btns-div .clear-board-btn{
-    font-size: 2rem;
-  }
-
-}
-
-@media (max-width: 768px){
-
-  .btns-div {
-    flex-wrap: wrap;
+  .btns-div .clear-board-btn {
+    font-size: 1.5rem;
   }
 
   .btns-div .undo-btn,
-.btns-div .check-solution-btn,
-.btns-div .solve-btn,
-.btns-div .hint-btn,
-.btns-div .clear-board-btn{
-  font-size: 1.5rem;
-}
-
-.btns-div .undo-btn,
-.btns-div .hint-btn,
-.btns-div .solve-btn{
-  width: 3rem;
-}
-
-.btns-div .clear-board-btn{
-  width: 6rem;
-}
-
-}
-
-
-@media (max-width: 390px){
-
-  .btns-div {
-    margin-top: 1rem;
-    padding-left: .5rem;
-    flex-wrap: wrap;
+  .btns-div .hint-btn,
+  .btns-div .solve-btn {
+    width: 3rem;
   }
 
+  .btns-div .clear-board-btn {
+    width: 6rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .btns-div {
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+    flex-wrap: wrap;
+  }
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import './NumbersBtns.css';
+import React from "react";
+import "./NumbersBtns.css";
 
 interface NumbersBtnsProps {
   onNumberClick: (number: string) => void;
@@ -20,6 +20,5 @@ const NumbersBtns: React.FC<NumbersBtnsProps> = ({ onNumberClick }) => {
     </div>
   );
 };
-
 
 export default NumbersBtns;
