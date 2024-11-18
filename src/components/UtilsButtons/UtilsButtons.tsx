@@ -269,7 +269,7 @@ const handleNewGameBtn = () => {
           <FontAwesomeIcon icon={faEraser} />
           <b>Clear Board</b>
         </button>
-        <button onClick={handleNewGameBtn} className="new-game-btn">
+        <button onClick={handleNewGameBtn} className={"new-game-btn"}>
           <FontAwesomeIcon icon={faGamepad} />
           <b>New Game</b>
         </button>

@@ -11,5 +11,11 @@ body {
   padding: 0 10px;
   justify-content: center;
   min-height: 100vh;
-  background: #4C3BCF;
+  background: #f9f7f7;
+}
+
+@media (min-width: 1024px) {
+  body {
+    background: #4c3bcf;
+  }
 }
