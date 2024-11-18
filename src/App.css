@@ -110,21 +110,12 @@
     margin-bottom: 1rem;
   }
 
-  .game-container .mistakes {
-    /* margin-left: -10rem; */
-    font-size: 1rem;
+  .game-container .mistakes-timer-part {
+    gap: 5rem;
+    margin-top: 1.5rem;
   }
 
-  .sudoku-container {
-    width: fit-content;
-    z-index: 2;
-  }
 
-  .sudoku-cell {
-    width: 30px;
-    height: 30px;
-    font-size: 1.3rem;
-  }
 
   .number-buttons {
     margin-top: 20px;

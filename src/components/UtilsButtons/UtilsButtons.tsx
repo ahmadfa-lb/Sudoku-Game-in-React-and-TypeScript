@@ -12,15 +12,15 @@ import {
   faBrain,
   faLightbulb,
   faEraser,
-  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { Cell } from "../../App"; 
 interface UtilsButtonsProps {
-  grid: string[][];
-  setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
+  grid: Cell[][];
+  setGrid: React.Dispatch<React.SetStateAction<Cell[][]>>;
   cellRefs: React.RefObject<(HTMLInputElement | null)[][]>;
-  gridHistory: string[][][];
-  setGridHistory: React.Dispatch<React.SetStateAction<string[][][]>>;
+  gridHistory: Cell[][][];
+  setGridHistory: React.Dispatch<React.SetStateAction<Cell[][][]>>;
   conflictCells: { row: number; col: number; color: "conflict" | "valid" }[];
   setConflictCells: React.Dispatch<
     React.SetStateAction<
@@ -90,7 +90,7 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
 
   const checkSolution = () => {
     const isBoardComplete = grid.every((row) =>
-      row.every((cell) => cell !== "")
+      row.every((cell) => cell.value !== "")
     );
 
     if (isBoardComplete) {
@@ -148,23 +148,53 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     }
   };
 
-  const handleHint = () => {
-    const solution = solveBoard([...grid].map((row) => [...row]));
+const handleHint = () => {
+  // Create a deep copy of the grid to preserve all the cells
+  const gridCopy = grid.map((row) =>
+    row.map((cell) => ({ ...cell })) // Creating a deep copy of each cell
+  );
 
-    // Check for conflicts before giving a hint
-    const hasConflicts = conflictCells.length > 0 || !solution;
-    if (hasConflicts) {
-      toast.warn("Resolve conflicts first!", {
-        position: "top-right",
-        autoClose: 5000,
-        theme: "light",
-        transition: Bounce,
-      });
-      return;
+  const solution = solveBoard(gridCopy);
+
+  // Check for conflicts before giving a hint
+  const hasConflicts = conflictCells.length > 0 || !solution;
+  if (hasConflicts) {
+    toast.warn("Resolve conflicts first!", {
+      position: "top-right",
+      autoClose: 5000,
+      theme: "light",
+      transition: Bounce,
+    });
+    return;
+  }
+
+  if (hintCount <= 0) {
+    toast.info("No hints left 🙂!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+    return;
+  }
+
+  if (solution) {
+    const emptyCells = [];
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid[row][col].value === "") {
+          emptyCells.push({ row, col });
+        }
+      }
     }
 
-    if (hintCount <= 0) {
-      toast.info("No hints left 🙂!", {
+    if (emptyCells.length === 0) {
+      toast.info("Nothing left to solve—try verifying your solution🙂!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -178,43 +208,26 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
       return;
     }
 
-    // If solution exists, give hint
-    if (solution) {
-      const emptyCells = [];
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (grid[row][col] === "") {
-            emptyCells.push({ row, col });
-          }
-        }
-      }
+    if (emptyCells.length > 0) {
+      const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 
-      if (emptyCells.length === 0) {
-        toast.info("Nothing left to solve—try verifying your solution🙂!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        return;
-      }
-
-      if (emptyCells.length > 0) {
-        const { row, col } =
-          emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        const hintGrid = [...grid].map((row) => [...row]);
-        hintGrid[row][col] = solution[row][col];
-
-        setGrid(hintGrid);
-        setHintCount(hintCount - 1);
-      }
+      const hintGrid = grid.map((r, i) =>
+        r.map((cell, j) =>
+          i === row && j === col
+            ? {
+                ...cell,
+                value: solution[row][col].value,
+                readOnly: true
+              }
+            : cell
+        )
+      );
+      setGrid(hintGrid);
+      setHintCount((prevHintCount) => prevHintCount - 1);
     }
-  };
+  }
+};
+
 
   return (
     <>

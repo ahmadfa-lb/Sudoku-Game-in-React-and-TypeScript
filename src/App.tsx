@@ -15,11 +15,20 @@ import "react-toastify/dist/ReactToastify.css";
 
 library.add(fas, fab);
 
+export interface Cell {
+  value: string; // The number in the cell
+  readOnly: boolean; // Whether the cell is read-only
+  status: "valid" | "invalid" | "empty"; 
+}
+
 const App: React.FC = () => {
-  const [grid, setGrid] = useState(
-    Array.from({ length: 9 }, () => Array(9).fill(""))
-  );
-  const [gridHistory, setGridHistory] = useState<string[][][]>([]);
+
+
+  
+  type grid = Cell[][];
+
+  const [grid, setGrid] = useState<Cell[][]>([]);
+  const [gridHistory, setGridHistory] = useState<Cell[][][]>([]);
   const [focusedCell, setFocusedCell] = useState<{
     row: number;
     col: number;
@@ -55,11 +64,14 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
   status: "valid" | "invalid";
 } | null>(null);
 
-  useEffect(() => {
-    const newPuzzle = generatePuzzle(difficulty);
-    setGrid(newPuzzle);
+const [readOnlyCells, setReadOnlyCells] = useState<{ row: number; col: number }[]>([]);
+const [userEditableCells, setUserEditableCells] = useState<{ row: number; col: number }[]>([]);
 
-  }, [difficulty]);
+useEffect(() => {
+  const newPuzzle = generatePuzzle(difficulty);
+  setGrid(newPuzzle); // Initialize with Cell structure
+}, [difficulty]);
+
 
   const handleNumberClick = (number: string) => {
     if (focusedCell) {
@@ -72,8 +84,9 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
   };
 
   const resetGame = (difficulty: string = "easy") => {
+    const newPuzzle = generatePuzzle(difficulty); // `Cell[][]`
+    setGrid(newPuzzle); 
     setGridHistory([]);
-    setGrid(generatePuzzle(difficulty));
     setFocusedCell(null);
     setSelectedNumber("");
     setMistakes(0);
@@ -84,6 +97,7 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
     setEnteredCells([]);
     setHighlightedCells([]);
     setEnteredCellStatus(null);
+    setTimer(0);
   };
 
   const difficulties = [
@@ -169,6 +183,10 @@ const [enteredCellStatus, setEnteredCellStatus] = useState<{
           setEnteredCells={setEnteredCells}
           enteredCellStatus={enteredCellStatus}
           setEnteredCellStatus={setEnteredCellStatus}
+          readOnlyCells={readOnlyCells}
+          setReadOnlyCells={setReadOnlyCells}
+          userEditableCells={userEditableCells}
+          setUserEditableCells={setUserEditableCells}
         />
         <NumberButtons onNumberClick={handleNumberClick} />
         <UtilsButtons

@@ -52,3 +52,13 @@
 .sudoku-cell.border-bottom {
   border-bottom: 2px solid #000;
 }
+
+
+@media (max-width: 768px){
+
+  .sudoku-cell {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+}
