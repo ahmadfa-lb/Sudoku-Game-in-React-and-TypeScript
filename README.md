@@ -4,7 +4,7 @@ This is a fully functional Sudoku game built with React and TypeScript. The game
 - check it by pressing in the following link: [click-me](https://sudoku-game-1133.netlify.app/)
 
 ## ScreenShots (PC Version & Mobile Version)
-<div style="display: flex; justify-content: space-between;">
+<div style="display: flex; justify-content: space-between; gap:2rem; align-items: center;">
   <img src="./game-pc-Screenshot.png" width="500" />
   <img src="./game-mobile-Screenshot.jpg" width="300" />
 </div>
