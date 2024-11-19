@@ -1,7 +1,7 @@
 # udoku Game in React TypeScript
 This is a fully functional Sudoku game built with React and TypeScript. The game allows players to interact with a Sudoku grid, enter numbers, and receive real-time feedback on the validity of their entries. It includes features such as conflict detection, undo functionality, and win/lose conditions. 
 
-- check it by pressing in the following link: [click-me](https://sudoku-game-1133.netlify.app/)
+- check it by pressing on the following link: [click-me](https://sudoku-game-1133.netlify.app/)
 
 ## ScreenShots (PC Version & Mobile Version)
 <div style="display: flex; justify-content: space-between; gap:2rem; align-items: center;">
