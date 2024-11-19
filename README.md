@@ -1,50 +1,20 @@
-# React + TypeScript + Vite
+# udoku Game in React TypeScript
+This is a fully functional Sudoku game built with React and TypeScript. The game allows players to interact with a Sudoku grid, enter numbers, and receive real-time feedback on the validity of their entries. It includes features such as conflict detection, undo functionality, and win/lose conditions.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![So_Long Project Demo](./game-pc-Screenshot)
+![So_Long Project Demo1](./game-mobile-Screenshot)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Features:
+- Interactive Grid: Players can select cells, input numbers, and see immediate validation of their entries.
+- Conflict Detection: The game highlights conflicting numbers in rows, columns, and subgrids, helping players avoid mistakes.
+- Undo Functionality: Players can undo their last action and revert to the previous grid state.
+- Game Over and Win: The game tracks the number of mistakes and displays a "game over" screen once the maximum number of mistakes is reached. If the player wins, a victory screen is shown.
+- Read-Only Cells: Some cells are read-only, and players are unable to modify these pre-filled values.
+- Responsive Design: The game layout adapts to different screen sizes for a smooth playing experience on both desktop and mobile devices.
+## How to Play:
+- Select a cell to focus on.
+- Enter a number from 1 to 9.
+- The game will validate your entry and highlight any conflicts.
+- If you reach the maximum allowed mistakes, the game will end, and you will see a "game over" screen.
+- You can undo your last action if needed.
+- Once you solve the puzzle, a "victory" screen will be shown.
