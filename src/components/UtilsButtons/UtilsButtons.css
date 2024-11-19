@@ -18,6 +18,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0rem;
   /* height: 50px; */
   border: none;
   border-radius: 10px;
@@ -70,7 +71,7 @@
 .btns-div .hint-btn b,
 .btns-div .clear-board-btn b,
 .btns-div .new-game-btn b {
-  padding-top: 0.5rem;
+  padding-top: 0.1rem;
   font-size: 0.7rem;
 }
 
@@ -127,59 +128,14 @@
 }
 
 /* /////////////////////    media queries       ////////////////////////// */
-
-@media (max-width: 1024px) {
-  .btns-div .undo-btn,
-  .btns-div .check-solution-btn,
-  .btns-div .solve-btn,
-  .btns-div .hint-btn,
-  .btns-div .clear-board-btn,
-  .btns-div .new-game-btn {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 391px) {
   .btns-div {
     flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
-
-  .btns-div .undo-btn,
-  .btns-div .check-solution-btn,
-  .btns-div .solve-btn,
-  .btns-div .hint-btn,
-  .btns-div .clear-board-btn,
-  .btns-div .new-game-btn {
-    font-size: 1.5rem;
-  }
-
-  .btns-div .undo-btn,
-  .btns-div .hint-btn,
-  .btns-div .solve-btn {
-    width: 3rem;
-  }
-
-  .btns-div .clear-board-btn {
-    width: 6rem;
   }
 }
 
-@media (max-width: 420px) {
+@media (min-width: 392px) and (max-width: 767px) {
   .btns-div {
-    margin-top: 1rem;
-    padding-left: 0.5rem;
     flex-wrap: wrap;
-  }
-}
-
-@media (min-width: 360px) and (max-height: 580px) {
-  .btns-div .undo-btn,
-  .btns-div .check-solution-btn,
-  .btns-div .solve-btn,
-  .btns-div .hint-btn,
-  .btns-div .clear-board-btn,
-  .btns-div .new-game-btn {
-    font-size: 1rem;
   }
 }

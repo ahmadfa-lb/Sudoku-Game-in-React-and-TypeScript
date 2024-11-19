@@ -203,9 +203,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
           r.forEach((cell, j) => {
             if (cell.value === clickedValue) {
               const tempGrid = grid.map((r2, i2) =>
-                r2.map(
-                  (cell2, j2) =>
-                    i2 === i && j2 === j ? { ...cell2, value: "" } : cell2
+                r2.map((cell2, j2) =>
+                  i2 === i && j2 === j ? { ...cell2, value: "" } : cell2
                 )
               );
               const isConflict = !isValidSudoku(tempGrid as Cell[][], i, j);
@@ -266,8 +265,6 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({
               onClick={() => handleCellClick(i, j)}
               readOnly={isCellReadOnly}
               className={`sudoku-cell ${cellClass1} ${cellClass2}
-                ${cell.status === "valid" ? "valid-cell" : ""} 
-                ${cell.status === "invalid" ? "invalid-cell" : ""} 
                 ${isHighlighted(i, j) ? "highlighted" : ""} 
                 ${isFocused ? "focused" : ""} 
                 ${i % 3 === 0 ? "border-top" : ""} 

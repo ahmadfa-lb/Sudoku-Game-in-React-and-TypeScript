@@ -14,7 +14,7 @@ body {
   background: #f9f7f7;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   body {
     background: #4c3bcf;
   }

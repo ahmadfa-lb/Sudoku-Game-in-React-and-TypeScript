@@ -98,6 +98,7 @@ useEffect(() => {
     setHighlightedCells([]);
     setEnteredCellStatus(null);
     setTimer(0);
+    setHasCleared(false);
   };
 
   const difficulties = [

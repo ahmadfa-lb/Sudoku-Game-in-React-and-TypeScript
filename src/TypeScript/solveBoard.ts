@@ -38,7 +38,6 @@ export const solveBoard = (grid: Cell[][]): Cell[][] | null => {
           if (isSafe(grid, row, col, numStr)) {
             grid[row][col].value = numStr;
             if (solveBoard(grid)) return grid;
-
             grid[row][col].value = "";
           }
         }

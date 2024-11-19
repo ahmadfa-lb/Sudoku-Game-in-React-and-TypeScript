@@ -65,10 +65,21 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
 }) => {
 
   const handleClearBtn = () => {
+    toast.info('Now,You are expected to manually enter a sudoku board!🔢', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
     clearBoard();
     setHasCleared(true);
   };
-
+  
   const undoLastAction = () => {
     if (gridHistory.length > 0) {
       const lastGridState = gridHistory[gridHistory.length - 1];
@@ -76,14 +87,13 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
       setGridHistory(gridHistory.slice(0, -1));
 
       const lastConflictCell = conflictCells[conflictCells.length - 1];
-
       if (lastConflictCell && cellRefs.current) {
         const cellElement =
           cellRefs.current[lastConflictCell.row][lastConflictCell.col];
         if (cellElement) {
           cellElement.classList.remove("highlighted");
+          cellElement.classList.remove("invalid");
         }
-
         setConflictCells(conflictCells.slice(0, -1));
       }
       setHighlightedCells([]);
@@ -123,14 +133,40 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
   };
 
   const handleSolve = () => {
+    if (!isValidBoard(grid)) {
+      toast.error("Invalid board! Resolve conflicts before solving.", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+      return;
+    }
+
     const solution = solveBoard([...grid].map((row) => [...row]));
     if (solution) {
       setGridHistory((prevHistory) => [
         ...prevHistory,
         JSON.parse(JSON.stringify(grid)),
       ]);
-
-      setGrid(solution);
+      toast.success('We solved it for YOU!🧩🎉', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+        const updatedGrid = grid.map((row) =>
+          row.map((cell) => ({
+            ...cell,
+            status: cell.status === "invalid" ? "empty" : cell.status, // Reset invalid cells to "empty"
+          }))
+        );
+        console.log(updatedGrid);
+      setGrid(updatedGrid);
     } else {
       toast.error(
         "Unsolvable board! Check for any duplicate numbers in rows, columns, or boxes!",
@@ -149,7 +185,18 @@ const UtilsButtons: React.FC<UtilsButtonsProps> = ({
     }
   };
 
+
 const handleHint = () => {
+  if (!isValidBoard(grid)) {
+    toast.warn("Resolve conflicts first!", {
+      position: "top-right",
+      autoClose: 5000,
+      theme: "light",
+      transition: Bounce,
+    });
+    return;
+  }
+
   const gridCopy = grid.map((row) =>
     row.map((cell) => ({ ...cell }))
   );
@@ -273,7 +320,8 @@ const handleNewGameBtn = () => {
           <FontAwesomeIcon icon={faGamepad} />
           <b>New Game</b>
         </button>
-        <ToastContainer />
+        <ToastContainer 
+        limit={4}/>
       </div>
     </>
   );
